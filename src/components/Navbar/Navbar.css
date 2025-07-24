@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Pacifico&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Pacifico&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Pacifico&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+*{
+    font-family:"Montserrat", sans-serif;
+    margin:0px;
+    padding:0px;
+}
+
+.navbar{
+    margin:1rem 5rem ;
+    height:100px;
+    background-color: rgb(255, 255, 255);
+    box-sizing: border-box;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+.navbar{
+    opacity:0;
+    transform: translateY(30px);
+    animation: navanimation 1s ease-out forwards;
+}
+@keyframes navanimation{
+    0%{
+        opacity:0;
+        transform: translateY(30px);
+    }
+    100%{
+        opacity:1;
+        transform: translateY(0);
+    }
+}
+.logobox{
+    height:100px;
+    width: 18.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.searchsuper{
+    height:60px;
+    width: 43.75rem;
+    display: flex;
+    align-items: center;
+    gap:1rem;
+    border:1px solid black;
+    box-sizing: border-box;
+    padding:0rem 2.1rem;   
+    border-radius: 2.5rem; 
+}
+.searchsuper button{
+    background-color: rgb(255, 255, 255);
+    border:none;
+    cursor:pointer;
+}
+.loginandsignupbox{
+    height:100px;
+    width: 25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#logoname1{
+    font-family: "Montserrat", sans-serif;
+    font-size:2.5rem;
+    font-weight:bold;
+
+}
+#logoname2{
+    font-family: "Montserrat", sans-serif;
+    font-size:2.5rem;
+    color: rgb(10, 71, 102);
+    font-weight:bold;
+}
+.searchbox{
+    font-size: 1.1rem;
+    height:50px;
+    width: 100%;
+    border:none;
+    outline:none;
+    background: transparent;
+}
+.fa-solid.fa-magnifying-glass{
+    font-size:20px;
+}
+.loginbutton{
+    width:6.25rem;
+    height:50px;
+    border:none;
+    color: white;
+    background-color: rgb(10, 71, 102);
+    border-radius: 30px;
+    font-weight: bold;
+    
+}
+.loginbutton:hover{
+    background-color: rgb(5, 21, 34);
+    transition: ease-in-out 0.3s;
+    cursor:pointer;
+}
+.signupbutton{
+    width:9.375rem;
+    height:50px;
+    border:none;
+    color: white;
+    background-color: rgb(10, 71, 102);
+    border-radius: 30px;
+    font-weight: bold;
+}
+.signupbutton:hover{
+    background-color: rgb(5, 21, 34);
+    transition: ease-in-out 0.3s;
+    cursor:pointer;
+}
+
+/* responsive design for navbar */
+
+@media screen and (max-width: 1200px) {
+    .navbar{
+        margin:1rem 2rem ;
+        justify-content: space-between;
+    }
+    .searchsuper{
+        width: 30rem;
+    }
+    .loginandsignupbox{
+        display:none;
+    }
+}
+
+@media screen and (max-width:800px){
+    .navbar{
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+    }
+    .searchsuper{
+        width: 100%;
+    }
+}
+input::placeholder{
+    font-size: 1rem;
+}
