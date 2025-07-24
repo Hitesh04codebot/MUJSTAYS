@@ -120,7 +120,7 @@
 @media screen and (max-width: 1200px) {
     .navbar{
         margin:1rem 2rem ;
-        justify-content: space-between;
+        justify-content: space-evenly;
     }
     .searchsuper{
         width: 30rem;
