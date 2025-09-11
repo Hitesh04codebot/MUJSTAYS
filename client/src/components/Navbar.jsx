@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { AiOutlineHome } from "react-icons/ai";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { MdOutlinePhone } from "react-icons/md";
+import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,18 +19,47 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex">
-          <ul className="flex space-x-10">
-            <li className="cursor-pointer hover:text-blue-600 transition">
-              Home
-            </li>
-            <li className="cursor-pointer hover:text-blue-600 transition">
-              About
-            </li>
-            <li className="cursor-pointer hover:text-blue-600 transition">
-              Contact
-            </li>
-          </ul>
-        </div>
+      <ul className="flex space-x-10">
+        <li>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `cursor-pointer transition ${
+                isActive ? "underline underline-offset-7 decoration-blue-600 text-blue-800" : "hover:text-blue-600"
+              }`
+            }
+          >
+            Home
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `cursor-pointer transition ${
+                isActive ? "underline underline-offset-7 decoration-blue-600  text-blue-800" : "hover:text-blue-600"
+              }`
+            }
+          >
+            About Us
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              `cursor-pointer transition ${
+                isActive ? "underline underline-offset-7 decoration-blue-600  text-blue-800" : "hover:text-blue-600"
+              }`
+            }
+          >
+            Contact
+          </NavLink>
+        </li>
+      </ul>
+    </div>
 
         {/* Desktop Buttons */}
         <div className="hidden md:flex">
