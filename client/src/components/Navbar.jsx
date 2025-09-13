@@ -88,17 +88,44 @@ export default function Navbar() {
           <ul className="space-y-4 text-lg">
             <li className="cursor-pointer hover:text-blue-600 transition flex items-center space-x-2">
               <AiOutlineHome size={20} />
-              <span>Home</span>
+              <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `cursor-pointer transition ${
+                isActive ? "underline underline-offset-7 decoration-blue-600 text-blue-800" : "hover:text-blue-600"
+              }`
+            }
+          >
+            Home
+          </NavLink>
             </li>
 
             <li className="cursor-pointer hover:text-blue-600 transition flex items-center space-x-2">
               <AiOutlineInfoCircle size={20} />
-              <span>About</span>
+              <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `cursor-pointer transition ${
+                isActive ? "underline underline-offset-7 decoration-blue-600  text-blue-800" : "hover:text-blue-600"
+              }`
+            }
+          >
+            About Us
+          </NavLink>
             </li>
 
             <li className="cursor-pointer hover:text-blue-600 transition flex items-center space-x-2">
               <MdOutlinePhone size={20} />
-              <span>Contact</span>
+              <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              `cursor-pointer transition ${
+                isActive ? "underline underline-offset-7 decoration-blue-600  text-blue-800" : "hover:text-blue-600"
+              }`
+            }
+          >
+            Contact
+          </NavLink>
             </li>
           </ul>
           <div className="flex flex-col space-y-4">
