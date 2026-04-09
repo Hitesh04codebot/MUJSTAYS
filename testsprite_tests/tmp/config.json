@@ -1,0 +1,19 @@
+{
+  "status": "commited",
+  "type": "backend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:80/MUJSTAYS",
+  "backendAuthType": "public",
+  "executionArgs": {
+    "projectName": "MUJSTAYS",
+    "projectPath": "c:\\xampp\\htdocs\\MUJSTAYS",
+    "testIds": [],
+    "additionalInstruction": "Run all high priority frontend tests to ensure student signup, booking, and search flows are working. Bypass OTP with 123456 as configured in verify-email.php.",
+    "serverMode": "development",
+    "envs": {
+      "API_KEY": "sk-user-ldZPKciM4xpmq3CREHSom5hN3gUYRCRDDS1jGC4ZGaWrBU3rzrPlSxpxgNPY72kBilSEgXFPjeWMOom2UuUZwB_lUKfn7776ck_Ka9zOu3wkzoA5MY8bw1Jb17awF60FbwY"
+    }
+  },
+  "serverPort": 63850,
+  "proxy": "http://75a51e41-b787-493a-9232-d6f8d8129cfc:K60EKVnJDZgEW8APRIpL4XLcZoA0GeW9@tun.testsprite.com:8080"
+}

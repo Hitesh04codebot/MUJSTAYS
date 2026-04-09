@@ -1,0 +1,89 @@
+version: "2"
+type: backend
+tech_stack:
+  - PHP 8.x
+  - MySQL 8.x
+  - HTML5/CSS3/JS (ES6)
+  - XAMPP
+  - PHPMailer
+  - Razorpay
+features:
+  - name: User Authentication
+    description: Signup, login, email verification, and password recovery
+    files:
+      - signup.php
+      - login.php
+      - verify-email.php
+      - forgot-password.php
+      - reset-password.php
+    endpoints:
+      - method: POST
+        path: /signup.php
+        description: Create a new account
+        auth_required: false
+      - method: POST
+        path: /login.php
+        description: User login
+        auth_required: false
+      - method: POST
+        path: /verify-email.php
+        description: Verify email using OTP
+        auth_required: true
+  - name: PG Discovery
+    description: Search and explore PG listings
+    files:
+      - index.php
+      - explore.php
+      - pg-detail.php
+    endpoints:
+      - method: GET
+        path: /index.php
+        description: Home page with featured PGs
+        auth_required: false
+      - method: GET
+        path: /explore.php
+        description: Search and filter PGs
+        auth_required: false
+      - method: GET
+        path: /pg-detail.php
+        description: View PG details
+        auth_required: false
+  - name: Student Services
+    description: Booking, payments, chat, and reviews for students
+    files:
+      - user/dashboard.php
+      - user/bookings.php
+      - user/payments.php
+      - user/chat.php
+    endpoints:
+      - method: POST
+        path: /user/bookings.php
+        description: Manage bookings
+        auth_required: true
+      - method: GET
+        path: /user/chat.php
+        description: Messaging with owners
+        auth_required: true
+  - name: Owner Management
+    description: Listing and booking management for PG owners
+    files:
+      - owner/dashboard.php
+      - owner/listings.php
+      - owner/add-listing.php
+    endpoints:
+      - method: POST
+        path: /owner/add-listing.php
+        description: Add new PG listing
+        auth_required: true
+  - name: Admin Panel
+    description: Listing moderation and user management
+    files:
+      - admin/dashboard.php
+      - admin/listings.php
+      - admin/users.php
+    endpoints:
+      - method: POST
+        path: /admin/listings.php
+        description: Approve or reject listings
+        auth_required: true
+known_limitations: []

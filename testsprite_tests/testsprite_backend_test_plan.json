@@ -1,0 +1,52 @@
+[
+  {
+    "id": "TC001",
+    "title": "postsignupphpcreateanewaccount",
+    "description": "Test user signup with valid data for student role, expect 201 response with session cookie and is_verified=0."
+  },
+  {
+    "id": "TC002",
+    "title": "postloginphploginuser",
+    "description": "Test user login with valid credentials, expect 200 response and session established."
+  },
+  {
+    "id": "TC003",
+    "title": "postverifyemailphpverifyemailusingotp",
+    "description": "Test email verification with valid OTP and session, expect 200 response and is_verified=1."
+  },
+  {
+    "id": "TC004",
+    "title": "getindexphphomepagewithfeaturedpgs",
+    "description": "Test home page loads successfully with featured PG listings and site hero content, expect 200 response."
+  },
+  {
+    "id": "TC005",
+    "title": "getexplorephpsearchandfilterpgs",
+    "description": "Test explore page with area, price_max, room_type filters and pagination, expect 200 response with filtered results and pagination metadata."
+  },
+  {
+    "id": "TC006",
+    "title": "getpgdetailphpviewpgdetails",
+    "description": "Test PG detail page with valid PG id, expect 200 response with PG details, gallery, room types and owner summary."
+  },
+  {
+    "id": "TC007",
+    "title": "postuserbookingsphpmanagebookings",
+    "description": "Test creating a booking with valid pg_id, room_type_id, move_in_date and booking_type, expect 201 booking created with correct status."
+  },
+  {
+    "id": "TC008",
+    "title": "getuserchatphpmessagingwithowners",
+    "description": "Test retrieving chat conversation with valid conversation_id and session, expect 200 response with conversation thread JSON."
+  },
+  {
+    "id": "TC009",
+    "title": "postowneraddlistingphpaddnewpglisting",
+    "description": "Test owner adding new PG listing with valid title, description, address, room_types JSON and photos, expect 201 listing created with status pending."
+  },
+  {
+    "id": "TC010",
+    "title": "postadminlistingsphpapproveorrejectlistings",
+    "description": "Test admin approving a pending listing with valid listing_id and admin session, expect 200 response with updated listing status and owner notified."
+  }
+]

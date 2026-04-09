@@ -1,0 +1,41 @@
+========================================
+[2026-04-04 18:59:50] TO: Sharwan Singh <sharwansingh@gmail.com>
+SUBJECT: Your MUJSTAYS verification code is 124617
+BODY: 
+
+
+  body{font-family:Inter,Arial,sans-serif;background:#f8fafc;margin:0;padding:0}
+  .wrap{max-width:600px;margin:30px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1)}
+  .header{background:linear-gradient(135deg,#1A3C5E,#2E86AB);padding:30px;text-align:center}
+  .header h1{color:#fff;margin:0;font-size:24px}
+  .header p{color:rgba(255,255,255,.8);margin:5px 0 0}
+  .body{padding:30px}
+  .body h2{color:#1A3C5E;margin-top:0}
+  .otp-box{background:#f0f7ff;border:2px dashed #2E86AB;border-radius:8px;padding:20px;text-align:center;margin:20px 0}
+  .otp{font-size:36px;font-weight:700;letter-spacing:8px;color:#1A3C5E}
+  .btn{display:inline-block;background:#2E86AB;color:#fff!important;padding:14px 30px;border-radius:8px;text-decoration:none;font-weight:600;margin:15px 0}
+  .footer{background:#f8fafc;padding:20px;text-align:center;color:#666;font-size:13px;border-top:1px solid #e2e8f0}
+
+
+  
+    🏠 MUJSTAYS
+    PG Discovery & Booking Platform for MUJ Students
+  
+  
+    Email Verification
+    Hi Sharwan Singh,
+Here is your verification code for MUJSTAYS:
+
+  124617
+  Valid for 10 minutes
+
+Enter this code on the verification page to activate your account.
+  
+  
+    © 2025 MUJSTAYS. Built for MUJ Students, Jaipur.
+    If you didn't request this email, please ignore it.
+  
+
+
+========================================
+
