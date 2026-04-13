@@ -14,11 +14,12 @@ require_once 'includes/db.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         .about-hero {
-            background: linear-gradient(135deg, var(--primary) 0%, #16537e 50%, var(--accent) 100%);
+            background: linear-gradient(rgba(26,60,94,0.85), rgba(26,60,94,0.85)), url('<?= BASE_URL ?>/assets/img/2724272.jpg') center/cover no-repeat;
             color: #fff;
-            padding: 80px 0;
+            padding: 100px 0;
             text-align: center;
         }
+
         .about-hero h1 {
             color: #fff;
             font-size: 3rem;
