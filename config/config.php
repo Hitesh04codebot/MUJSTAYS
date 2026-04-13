@@ -17,7 +17,9 @@ define('DB_PORT',    ($_ENV['MYSQL_ADDON_PORT']   ?? $_ENV['DB_PORT']     ?? $_E
 
 
 // --- URLs & Paths ---
-$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
+$is_https = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || 
+            (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+$protocol = $is_https ? "https" : "http";
 $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
 // Smart detection: If we are on localhost, use /MUJSTAYS, otherwise use root /
 $subdir = (strpos($host, 'localhost') !== false || strpos($host, '127.0.0.1') !== false) ? '/MUJSTAYS' : '';
