@@ -171,12 +171,14 @@ CREATE TABLE `reviews` (
   `owner_response` TEXT DEFAULT NULL,
   `is_flagged` TINYINT(1) DEFAULT 0,
   `is_approved` TINYINT(1) DEFAULT 1,
+  `is_pinned` TINYINT(1) DEFAULT 0,
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_review_pg` FOREIGN KEY (`pg_id`) REFERENCES `pg_listings` (`id`),
   CONSTRAINT `fk_review_student` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_review_booking` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- 9. Messages table
 CREATE TABLE `messages` (

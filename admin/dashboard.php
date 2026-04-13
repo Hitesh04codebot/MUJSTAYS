@@ -36,7 +36,16 @@ $c_labels = array_column($commission,'month');
 $c_values = array_column($commission,'commission');
 
 // Top PGs this month
-$top_pgs = $pdo->query("SELECT p.title, p.area_name, COUNT(b.id) AS bookings FROM bookings b JOIN pg_listings p ON p.id=b.pg_id WHERE MONTH(b.created_at)=MONTH(NOW()) GROUP BY b.pg_id ORDER BY bookings DESC LIMIT 5")->fetchAll();
+$top_pgs = $pdo->query("
+    SELECT p.title, a.name AS area_name, COUNT(b.id) AS bookings 
+    FROM bookings b 
+    JOIN pg_listings p ON p.id = b.pg_id 
+    JOIN areas a ON p.area_id = a.id
+    WHERE MONTH(b.created_at) = MONTH(NOW()) 
+    GROUP BY b.pg_id 
+    ORDER BY bookings DESC LIMIT 5
+")->fetchAll();
+
 ?>
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
