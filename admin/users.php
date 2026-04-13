@@ -43,11 +43,12 @@ $pag=paginate($total,20);
 $users=$pdo->prepare("SELECT u.*, 
     (SELECT COUNT(*) FROM pg_listings WHERE owner_id=u.id AND status='approved') AS active_listings, 
     (SELECT COUNT(*) FROM bookings WHERE student_id=u.id) AS total_bookings,
-    k.file_path AS kyc_path, k.doc_type AS kyc_type
+    k.file_path AS kyc_path, k.id_type AS kyc_type
     FROM users u 
-    LEFT JOIN kyc_documents k ON k.owner_id=u.id AND k.status='pending'
+    LEFT JOIN kyc_documents k ON k.user_id=u.id AND k.status='pending'
     WHERE $where 
     ORDER BY u.created_at DESC LIMIT {$pag['per_page']} OFFSET {$pag['offset']}");
+
 $users->execute($params); $users=$users->fetchAll();
 ?>
 <!DOCTYPE html>

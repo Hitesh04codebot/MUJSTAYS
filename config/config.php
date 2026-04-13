@@ -4,13 +4,14 @@
 // Update ONLY this file when switching XAMPP ↔ cPanel
 // ============================================================
 
-// --- Database (Railway / Pantheon / Cloud Compatible) ---
-define('DB_HOST',    ($_ENV['DB_HOST'] ?? $_ENV['MYSQLHOST'] ?? getenv('MYSQLHOST')) ?: 'localhost');
-define('DB_NAME',    ($_ENV['DB_NAME'] ?? $_ENV['MYSQLDATABASE'] ?? getenv('MYSQLDATABASE')) ?: 'mujstays_db');
-define('DB_USER',    ($_ENV['DB_USER'] ?? $_ENV['MYSQLUSER'] ?? getenv('MYSQLUSER')) ?: 'root');
-define('DB_PASS',    ($_ENV['DB_PASSWORD'] ?? $_ENV['MYSQLPASSWORD'] ?? getenv('MYSQLPASSWORD')) ?: '');
+// --- Database (Railway / Render / Clever Cloud Compatible) ---
+define('DB_HOST',    ($_ENV['MYSQL_ADDON_HOST']   ?? $_ENV['DB_HOST']     ?? $_ENV['MYSQLHOST']     ?? getenv('MYSQLHOST')) ?: 'localhost');
+define('DB_NAME',    ($_ENV['MYSQL_ADDON_DB']     ?? $_ENV['DB_NAME']     ?? $_ENV['MYSQLDATABASE'] ?? getenv('MYSQLDATABASE')) ?: 'mujstays_db');
+define('DB_USER',    ($_ENV['MYSQL_ADDON_USER']   ?? $_ENV['DB_USER']     ?? $_ENV['MYSQLUSER']     ?? getenv('MYSQLUSER')) ?: 'root');
+define('DB_PASS',    ($_ENV['MYSQL_ADDON_PASSWORD'] ?? $_ENV['DB_PASS']     ?? $_ENV['MYSQLPASSWORD'] ?? getenv('MYSQLPASSWORD')) ?: '');
 define('DB_CHARSET', 'utf8mb4');
-define('DB_PORT',    ($_ENV['DB_PORT'] ?? $_ENV['MYSQLPORT'] ?? getenv('MYSQLPORT')) ?: '3306');
+define('DB_PORT',    ($_ENV['MYSQL_ADDON_PORT']   ?? $_ENV['DB_PORT']     ?? $_ENV['MYSQLPORT']     ?? getenv('MYSQLPORT')) ?: '3306');
+
 
 
 
