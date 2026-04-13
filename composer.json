@@ -1,0 +1,8 @@
+{
+    "name": "hitesh04/mujstays",
+    "description": "MUJSTAYS - PG Discovery Platform",
+    "type": "project",
+    "require": {
+        "php": ">=8.0"
+    }
+}

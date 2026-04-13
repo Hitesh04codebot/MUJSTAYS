@@ -4,12 +4,14 @@
 // Update ONLY this file when switching XAMPP ↔ cPanel
 // ============================================================
 
-// --- Database ---
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'mujstays_db');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+// --- Database (Railway / Cloud Compatible) ---
+define('DB_HOST',    getenv('MYSQLHOST') ?: 'localhost');
+define('DB_NAME',    getenv('MYSQLDATABASE') ?: 'mujstays_db');
+define('DB_USER',    getenv('MYSQLUSER') ?: 'root');
+define('DB_PASS',    getenv('MYSQLPASSWORD') ?: '');
 define('DB_CHARSET', 'utf8mb4');
+define('DB_PORT',    getenv('MYSQLPORT') ?: '3306');
+
 
 // --- URLs & Paths ---
 $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
