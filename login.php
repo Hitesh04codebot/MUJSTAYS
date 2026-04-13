@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Remember Me
                 if (!empty($_POST['remember_me'])) {
-                    ini_set('session.cookie_lifetime', SESSION_LIFETIME);
+                    setcookie(session_name(), session_id(), time() + SESSION_LIFETIME, '/');
                 }
 
                 if (!$user['is_verified']) {
