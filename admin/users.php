@@ -58,19 +58,7 @@ $users->execute($params); $users=$users->fetchAll();
 </head><body>
 <?php require_once '../components/navbar.php'; ?>
 <div class="dashboard-layout">
-  <div class="sidebar">
-    <div class="sidebar-logo"><h3>⚙️ Admin Panel</h3></div>
-    <nav class="sidebar-menu">
-      <a href="dashboard.php"    class="sidebar-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-      <a href="listings.php"     class="sidebar-link"><i class="fas fa-home"></i> Listings</a>
-      <a href="users.php"        class="sidebar-link active"><i class="fas fa-users"></i> Users</a>
-      <a href="complaints.php"   class="sidebar-link"><i class="fas fa-flag"></i> Complaints</a>
-      <a href="bookings.php"     class="sidebar-link"><i class="fas fa-calendar"></i> Bookings</a>
-      <a href="payments.php"     class="sidebar-link"><i class="fas fa-money-bill-wave"></i> Payments</a>
-      <a href="notifications.php" class="sidebar-link"><i class="fas fa-bell"></i> Notifications</a>
-      <a href="<?= BASE_URL ?>/logout.php" class="sidebar-link" style="color:rgba(255,100,100,.8)"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </nav>
-  </div>
+  <?php require_once '../components/sidebar.php'; ?>
   <div class="main-content">
     <?php if ($m=flash_get('success')): ?><div class="alert alert-success" data-dismiss="4000"><i class="fas fa-check-circle"></i> <?= htmlspecialchars($m) ?></div><?php endif; ?>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px">

@@ -110,6 +110,7 @@ function send_booking_confirmation_email(string $to, string $name, array $bookin
     $room = htmlspecialchars(ucfirst($booking['room_type']));
     $date = htmlspecialchars($booking['move_in_date']);
     $amt  = format_currency($booking['total_amount']);
+    $baseUrl = BASE_URL;
     $body = <<<HTML
     <p>Hi <strong>{$name}</strong>,</p>
     <p>🎉 Your booking has been <strong>confirmed</strong>!</p>
@@ -119,7 +120,7 @@ function send_booking_confirmation_email(string $to, string $name, array $bookin
       <tr style="background:#f0f7ff"><td style="padding:10px;font-weight:600">Move-in Date</td><td style="padding:10px">{$date}</td></tr>
       <tr><td style="padding:10px;font-weight:600">Total Amount</td><td style="padding:10px">{$amt}</td></tr>
     </table>
-    <a href="HTML . BASE_URL . /user/bookings.php" class="btn">View Booking Details</a>
+    <a href="{$baseUrl}/user/bookings.php" class="btn">View Booking Details</a>
     HTML;
     return send_email($to, $name, 'Booking Confirmed — ' . $booking['pg_title'], email_template('Booking Confirmed!', $body));
 }
@@ -127,11 +128,12 @@ function send_booking_confirmation_email(string $to, string $name, array $bookin
 function send_booking_rejection_email(string $to, string $name, string $pg_name, string $reason): bool {
     $pg = htmlspecialchars($pg_name);
     $r  = htmlspecialchars($reason);
+    $baseUrl = BASE_URL;
     $body = <<<HTML
     <p>Hi <strong>{$name}</strong>,</p>
     <p>We're sorry, your booking request for <strong>{$pg}</strong> was not accepted by the owner.</p>
     <p><strong>Reason:</strong> {$r}</p>
-    <a href="HTML . BASE_URL . /explore.php" class="btn">Explore Other PGs</a>
+    <a href="{$baseUrl}/explore.php" class="btn">Explore Other PGs</a>
     HTML;
     return send_email($to, $name, 'Booking Update — ' . $pg_name, email_template('Booking Not Confirmed', $body));
 }
@@ -181,13 +183,14 @@ function send_otp_sms(string $phone, string $otp): bool {
 function send_booking_request_email(string $to, string $name, string $pg_title, string $move_in, float $total, int $booking_id): bool {
     $pg = htmlspecialchars($pg_title);
     $amt = format_currency($total);
+    $baseUrl = BASE_URL;
     $body = <<<HTML
     <p>Hi <strong>{$name}</strong>,</p>
     <p>Your booking request for <strong>{$pg}</strong> has been successfully sent to the owner!</p>
     <p>We'll notify you as soon as the owner accepts or declines your request (usually within 24 hours).</p>
     <p><strong>Move-in Date:</strong> {$move_in}<br>
     <strong>Total Amount:</strong> {$amt}</p>
-    <a href="HTML . BASE_URL . /user/bookings.php" class="btn">View Bookings</a>
+    <a href="{$baseUrl}/user/bookings.php" class="btn">View Bookings</a>
     HTML;
     return send_email($to, $name, 'Booking Request Sent — ' . $pg_title, email_template('Booking Request Pending', $body));
 }

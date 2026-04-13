@@ -39,16 +39,16 @@ $type_icons = [
   </div>
 
   <?php if (empty($notifs)): ?>
-    <div style="padding:32px;text-align:center;color:var(--text-muted)">
-      <div style="font-size:32px;margin-bottom:8px">🔔</div>
-      <div style="font-size:13px">No notifications yet</div>
+    <div style="padding:48px 24px;text-align:center;color:var(--text-muted)">
+      <div style="width:60px;height:60px;background:var(--bg2);border-radius:50%;display:grid;place-items:center;margin:0 auto 16px;font-size:24px">🔔</div>
+      <div style="font-size:14px;font-weight:600;color:var(--primary)">All caught up!</div>
+      <div style="font-size:12px;margin-top:4px">No new notifications at the moment.</div>
     </div>
   <?php else: ?>
     <?php foreach ($notifs as $n):
       $meta = $type_icons[$n['type']] ?? ['icon' => '🔔', 'bg' => '#EBF5FB'];
-      $link = $n['link'] ?: '#';
     ?>
-    <a href="<?= htmlspecialchars(BASE_URL . $link) ?>" class="notif-item <?= $n['is_read'] ? '' : 'unread' ?>" data-notif-id="<?= $n['id'] ?>">
+    <a href="<?= htmlspecialchars(format_link($n['link'])) ?>" class="notif-item <?= $n['is_read'] ? '' : 'unread' ?>" data-notif-id="<?= $n['id'] ?>">
       <div class="notif-icon" style="background:<?= $meta['bg'] ?>"><?= $meta['icon'] ?></div>
       <div style="flex:1;min-width:0">
         <div class="notif-body-title"><?= htmlspecialchars($n['title']) ?></div>

@@ -91,25 +91,32 @@ $notif_count = unread_notification_count($pdo, $uid);
             $icon_class = 'info'; $icon = 'info-circle';
             if (strpos($n['type'], 'booking') !== false) { $icon_class = 'booking'; $icon = 'calendar-check'; }
             if (strpos($n['type'], 'payment') !== false) { $icon_class = 'payment'; $icon = 'money-bill-wave'; }
+            
+            $final_link = $n['link'] ? format_link($n['link']) : '#';
+            if ($n['link'] && !preg_match('/^(https?:\/\/|ftp:\/\/|\/\/)/i', $n['link'])) {
+                $final_link .= (str_contains($final_link, '?') ? '&' : '?') . "read=" . $n['id'] . "&csrf_token=" . csrf_token();
+            }
           ?>
-          <div class="notification-item <?= $n['is_read'] ? '' : 'unread' ?>">
+          <a href="<?= $n['link'] ? htmlspecialchars($final_link) : 'javascript:void(0)' ?>" class="notification-item <?= $n['is_read'] ? '' : 'unread' ?>" style="text-decoration:none; display:block; padding:20px; border-bottom:1px solid var(--border); transition: var(--transition); cursor: <?= $n['link'] ? 'pointer' : 'default' ?>">
             <div style="display:flex;gap:16px;align-items:flex-start">
-              <div class="notif-icon <?= $icon_class ?>"><i class="fas fa-<?= $icon ?>"></i></div>
-              <div style="flex:1">
+              <div class="notif-icon <?= $icon_class ?>" style="flex-shrink:0"><i class="fas fa-<?= $icon ?>"></i></div>
+              <div style="flex:1; min-width:0">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start">
-                  <h4 style="margin:0;font-size:15px;font-weight:600;color:var(--primary)"><?= htmlspecialchars($n['title']) ?></h4>
+                  <h4 style="margin:0;font-size:15px;font-weight:700;color:var(--primary)"><?= htmlspecialchars($n['title']) ?></h4>
                   <?php if (!$n['is_read']): ?>
-                    <a href="?read=<?= $n['id'] ?>&csrf_token=<?= csrf_token() ?>" class="btn btn-ghost btn-sm" style="padding:2px 8px;font-size:11px" title="Mark as read">Mark as read</a>
+                    <span class="badge badge-accent" style="font-size:10px">NEW</span>
                   <?php endif; ?>
                 </div>
-                <p style="margin:4px 0 0 0;font-size:14px;color:var(--text-muted);line-height:1.4"><?= htmlspecialchars($n['body']) ?></p>
-                <?php if ($n['link']): ?>
-                  <div style="margin-top:8px"><a href="<?= BASE_URL . $n['link'] ?>&read=<?= $n['id'] ?>&csrf_token=<?= csrf_token() ?>" class="btn btn-ghost btn-sm" style="padding:0;color:var(--accent);font-weight:600">View Details <i class="fas fa-arrow-right" style="font-size:10px"></i></a></div>
-                <?php endif; ?>
-                <div class="notif-time" title="<?= $n['created_at'] ?>"><i class="far fa-clock"></i> <?= time_ago($n['created_at']) ?></div>
+                <p style="margin:6px 0 0 0;font-size:14px;color:var(--text);line-height:1.5"><?= htmlspecialchars($n['body']) ?></p>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px">
+                    <div class="notif-time" style="font-size:12px; color:var(--text-light)" title="<?= $n['created_at'] ?>"><i class="far fa-clock"></i> <?= time_ago($n['created_at']) ?></div>
+                    <?php if ($n['link']): ?>
+                        <span style="font-size:12px; color:var(--accent); font-weight:600">View Details <i class="fas fa-arrow-right"></i></span>
+                    <?php endif; ?>
+                </div>
               </div>
             </div>
-          </div>
+          </a>
           <?php endforeach; ?>
         </div>
         <div style="padding:16px"><?= pagination_html($pag, 'notifications.php') ?></div>
@@ -118,6 +125,4 @@ $notif_count = unread_notification_count($pdo, $uid);
   </div>
 </div>
 <?php require_once '../components/footer.php'; ?>
-<script>var BASE_URL='<?= BASE_URL ?>';</script>
-<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
 </body></html>

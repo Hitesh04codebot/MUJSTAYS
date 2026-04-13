@@ -81,3 +81,10 @@ require_once __DIR__ . '/../config/config.php';
     </div>
   </div>
 </footer>
+
+<!-- Global Scripts -->
+<script>
+  window.BASE_URL = '<?= BASE_URL ?>';
+  window.CSRF_TOKEN = '<?= csrf_token() ?>';
+</script>
+<script src="<?= BASE_URL ?>/assets/js/main.js"></script>

@@ -43,22 +43,7 @@ $chart_values = array_column($chart_data,'net');
 </head><body>
 <?php require_once '../components/navbar.php'; ?>
 <div class="dashboard-layout">
-  <div class="sidebar">
-    <div class="sidebar-logo"><h3>🏘️ Owner</h3><p><?= htmlspecialchars($_SESSION['name']) ?></p>
-      <?php if (!empty($_SESSION['is_kyc_verified'])): ?><span class="kyc-badge kyc-verified" style="font-size:11px;margin-top:6px"><i class="fas fa-shield-alt"></i> KYC Verified</span><?php else: ?><span class="kyc-badge kyc-pending" style="font-size:11px;margin-top:6px">⏳ KYC Pending</span><?php endif; ?>
-    </div>
-    <nav class="sidebar-menu">
-      <a href="dashboard.php"  class="sidebar-link active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-      <a href="listings.php"   class="sidebar-link"><i class="fas fa-home"></i> My Listings</a>
-      <a href="add-listing.php" class="sidebar-link"><i class="fas fa-plus-circle"></i> Add Listing</a>
-      <a href="bookings.php"   class="sidebar-link"><i class="fas fa-calendar-check"></i> Bookings <?php if($stats['pending_bookings']>0): ?><span class="badge badge-danger" style="font-size:10px;margin-left:auto"><?= $stats['pending_bookings'] ?></span><?php endif; ?></a>
-      <a href="payments.php"   class="sidebar-link"><i class="fas fa-money-bill-wave"></i> Payments</a>
-      <a href="chat.php"       class="sidebar-link"><i class="fas fa-comments"></i> Messages</a>
-      <a href="reviews.php"    class="sidebar-link"><i class="fas fa-star"></i> Reviews</a>
-      <a href="profile.php"    class="sidebar-link"><i class="fas fa-user"></i> Profile & KYC</a>
-      <a href="<?= BASE_URL ?>/logout.php" class="sidebar-link" style="color:rgba(255,100,100,.8)"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </nav>
-  </div>
+  <?php require_once '../components/sidebar.php'; ?>
 
   <div class="main-content">
     <?php if ($m=flash_get('success')): ?><div class="alert alert-success" data-dismiss="4000"><i class="fas fa-check-circle"></i> <?= htmlspecialchars($m) ?></div><?php endif; ?>

@@ -59,32 +59,44 @@ document.querySelectorAll('.modal-close').forEach(btn => {
   });
 });
 
-// ---- Notification Bell toggle ----
-(function () {
+// ---- Dropdown / Toggle Helpers ----
+document.addEventListener('DOMContentLoaded', () => {
+  // Notification Bell
   const bell = document.getElementById('bell-btn');
-  const dropdown = document.getElementById('notif-dropdown');
-  if (bell && dropdown) {
+  const notifDropdown = document.getElementById('notif-dropdown');
+  if (bell && notifDropdown) {
     bell.addEventListener('click', e => {
+      e.preventDefault();
       e.stopPropagation();
-      dropdown.classList.toggle('open');
+      // Close other dropdowns
+      document.getElementById('profile-menu')?.classList.remove('open');
+      notifDropdown.classList.toggle('open');
     });
-    document.addEventListener('click', () => dropdown.classList.remove('open'));
-    dropdown.addEventListener('click', e => e.stopPropagation());
   }
-})();
 
-// ---- Profile dropdown toggle ----
-(function () {
+  // Profile Dropdown
   const profileBtn = document.getElementById('profile-btn');
   const profileMenu = document.getElementById('profile-menu');
   if (profileBtn && profileMenu) {
     profileBtn.addEventListener('click', e => {
+      e.preventDefault();
       e.stopPropagation();
+      // Close other dropdowns
+      document.getElementById('notif-dropdown')?.classList.remove('open');
       profileMenu.classList.toggle('open');
     });
-    document.addEventListener('click', () => profileMenu.classList.remove('open'));
   }
-})();
+
+  // Close all on outside click
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.notif-dropdown, .profile-menu').forEach(d => d.classList.remove('open'));
+  });
+
+  // Prevent closing when clicking inside
+  document.querySelectorAll('.notif-dropdown, .profile-menu').forEach(d => {
+    d.addEventListener('click', e => e.stopPropagation());
+  });
+});
 
 // ---- Save / Bookmark PG (AJAX) ----
 document.querySelectorAll('.save-btn[data-pg]').forEach(btn => {

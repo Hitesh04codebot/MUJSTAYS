@@ -112,15 +112,17 @@ function paginate(int $total, int $per_page = 12, string $param = 'page'): array
 function pagination_html(array $p, string $base_url): string {
     if ($p['total_pages'] <= 1) return '';
     $html = '<div class="pagination">';
+    $sep = str_contains($base_url, '?') ? '&' : '?';
+
     if ($p['current'] > 1) {
-        $html .= '<a href="' . $base_url . '&page=' . ($p['current'] - 1) . '" class="page-btn">‹ Prev</a>';
+        $html .= '<a href="' . $base_url . $sep . 'page=' . ($p['current'] - 1) . '" class="page-btn">‹ Prev</a>';
     }
     for ($i = max(1, $p['current'] - 2); $i <= min($p['total_pages'], $p['current'] + 2); $i++) {
         $active = $i === $p['current'] ? ' active' : '';
-        $html .= '<a href="' . $base_url . '&page=' . $i . '" class="page-btn' . $active . '">' . $i . '</a>';
+        $html .= '<a href="' . $base_url . $sep . 'page=' . $i . '" class="page-btn' . $active . '">' . $i . '</a>';
     }
     if ($p['current'] < $p['total_pages']) {
-        $html .= '<a href="' . $base_url . '&page=' . ($p['current'] + 1) . '" class="page-btn">Next ›</a>';
+        $html .= '<a href="' . $base_url . $sep . 'page=' . ($p['current'] + 1) . '" class="page-btn">Next ›</a>';
     }
     $html .= '</div>';
     return $html;
@@ -296,4 +298,15 @@ function number_compact(int $n): string {
 
 // get_db() is defined in includes/db.php as a static singleton.
 // Call get_db() directly anywhere db.php has been included.
+
+/**
+ * Format a link: returns external URLs as-is, or prepends BASE_URL for internal paths.
+ */
+function format_link(?string $link): string {
+    if (!$link || $link === '#') return '#';
+    if (preg_match('/^(https?:\/\/|ftp:\/\/|\/\/)/i', $link)) {
+        return $link;
+    }
+    return BASE_URL . (str_starts_with($link, '/') ? '' : '/') . $link;
+}
 

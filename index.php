@@ -37,16 +37,16 @@ $stats_stmt = $pdo->query("
 ");
 $stats = $stats_stmt->fetch();
 
-// Testimonials from approved reviews
+// Pinned and Approved reviews for "Real Experiences"
 $reviews_stmt = $pdo->query("
-    SELECT r.rating, r.review_text, r.created_at,
+    SELECT r.rating, r.review_text, r.created_at, r.is_pinned,
            u.name AS student_name, u.profile_photo,
-           p.title AS pg_title
+           p.title AS pg_title, p.slug AS pg_slug
     FROM reviews r
     JOIN users u ON u.id = r.student_id
     JOIN pg_listings p ON p.id = r.pg_id
-    WHERE r.is_approved = 1 AND r.rating >= 4 AND r.review_text IS NOT NULL
-    ORDER BY r.rating DESC, r.created_at DESC LIMIT 6
+    WHERE r.is_approved = 1 AND r.review_text IS NOT NULL
+    ORDER BY r.is_pinned DESC, r.rating DESC, r.created_at DESC LIMIT 9
 ");
 $testimonials = $reviews_stmt->fetchAll();
 
@@ -255,35 +255,54 @@ $areas_icons = [
   </div>
 </section>
 
-<!-- ============ TESTIMONIALS ============ -->
+<!-- ============ REAL EXPERIENCES ============ -->
 <?php if (!empty($testimonials)): ?>
-<section class="section" style="background:var(--bg2)">
+<section class="section" style="background:var(--bg2); position:relative; overflow:hidden;">
+  <!-- Decorative background elements -->
+  <div style="position:absolute; top:-100px; right:-100px; width:300px; height:300px; background:var(--accent); filter:blur(150px); opacity:0.1; pointer-events:none;"></div>
+  <div style="position:absolute; bottom:-100px; left:-100px; width:300px; height:300px; background:var(--primary); filter:blur(150px); opacity:0.1; pointer-events:none;"></div>
+
   <div class="container">
     <div class="section-title">
       <div class="accent-line"></div>
-      <h2>What MUJ Students Say</h2>
-      <p>Real reviews from verified student residents</p>
+      <h2 style="font-size: 2.8rem; margin-bottom: 8px;">Real Experiences, Real Stays</h2>
+      <p>Genuine feedback from students living in MUJSTAYS verified PGs</p>
     </div>
-    <div class="pg-grid">
+    
+    <div class="pg-grid" style="grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));">
       <?php foreach ($testimonials as $t): ?>
-      <div class="testimonial-card">
+      <div class="testimonial-card" style="display:flex; flex-direction:column; height:100%; position:relative; <?= $t['is_pinned'] ? 'border: 2px solid var(--accent);' : '' ?>">
+        <?php if($t['is_pinned']): ?>
+            <div style="position:absolute; top:12px; right:12px; color:var(--accent); font-size:12px; font-weight:700;">
+                <i class="fas fa-thumbtack"></i> FEATURED
+            </div>
+        <?php endif; ?>
+
         <div class="stars" style="margin-bottom:12px">
           <?php for ($i = 1; $i <= 5; $i++): ?>
-            <i class="fas fa-star" style="<?= $i > $t['rating'] ? 'color:var(--border)' : '' ?>"></i>
+            <i class="fas fa-star" style="<?= $i > $t['rating'] ? 'color:#ddd' : 'color:#F39C12' ?>"></i>
           <?php endfor; ?>
         </div>
-        <p class="testimonial-text">"<?= htmlspecialchars(truncate($t['review_text'], 150)) ?>"</p>
-        <div class="testimonial-author">
-          <div style="width:44px;height:44px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:16px;flex-shrink:0">
+        
+        <p class="testimonial-text" style="font-size:1.05rem; line-height:1.6; font-style:italic; flex-grow:1; margin-bottom:24px;">"<?= htmlspecialchars($t['review_text']) ?>"</p>
+        
+        <div class="testimonial-author" style="margin-top:auto; padding-top:16px; border-top:1px solid rgba(0,0,0,0.05);">
+          <div style="width:48px;height:48px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px;flex-shrink:0">
             <?= strtoupper(mb_substr($t['student_name'], 0, 1)) ?>
           </div>
-          <div>
-            <div class="testimonial-name"><?= htmlspecialchars($t['student_name']) ?></div>
-            <div class="testimonial-meta">MUJ Student · <?= htmlspecialchars(truncate($t['pg_title'], 30)) ?></div>
+          <div style="min-width:0">
+            <div class="testimonial-name" style="font-weight:700; color:var(--primary);"><?= htmlspecialchars($t['student_name']) ?></div>
+            <div class="testimonial-meta" style="font-size:12px; color:var(--text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                Staying at <a href="<?= BASE_URL ?>/pg-detail.php?slug=<?= $t['pg_slug'] ?>" style="color:var(--accent); font-weight:600; text-decoration:none;"><?= htmlspecialchars($t['pg_title']) ?></a>
+            </div>
           </div>
         </div>
       </div>
       <?php endforeach; ?>
+    </div>
+    
+    <div style="text-align:center; margin-top:48px;">
+        <p style="color:var(--text-muted); font-size:14px;">Want to share your experience? <a href="<?= BASE_URL ?>/user/bookings.php" style="color:var(--primary); font-weight:600;">Rate your stay</a></p>
     </div>
   </div>
 </section>

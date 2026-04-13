@@ -35,25 +35,7 @@ $page_title = 'My Dashboard';
 <?php require_once '../components/navbar.php'; ?>
 <div class="dashboard-layout">
   <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="sidebar-logo"><h3>🎓 Student</h3><p><?= htmlspecialchars($_SESSION['name']) ?></p></div>
-    <nav class="sidebar-menu">
-      <div class="sidebar-section">Main</div>
-      <a href="dashboard.php" class="sidebar-link active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-      <a href="bookings.php"  class="sidebar-link"><i class="fas fa-calendar-check"></i> My Bookings</a>
-      <a href="saved.php"     class="sidebar-link"><i class="fas fa-heart"></i> Saved PGs</a>
-      <a href="compare.php"   class="sidebar-link"><i class="fas fa-balance-scale"></i> Compare PGs</a>
-      <div class="sidebar-section">Activity</div>
-      <a href="chat.php"          class="sidebar-link"><i class="fas fa-comments"></i> Messages</a>
-      <a href="notifications.php" class="sidebar-link"><i class="fas fa-bell"></i> Notifications <?php if ($notif_count): ?><span class="badge badge-danger" style="font-size:10px;margin-left:auto"><?= $notif_count ?></span><?php endif; ?></a>
-      <a href="reviews.php"   class="sidebar-link"><i class="fas fa-star"></i> My Reviews</a>
-      <a href="payments.php"  class="sidebar-link"><i class="fas fa-receipt"></i> Payments</a>
-      <div class="sidebar-section">Account</div>
-      <a href="profile.php"       class="sidebar-link"><i class="fas fa-user"></i> Profile</a>
-      <a href="<?= BASE_URL ?>/explore.php" class="sidebar-link"><i class="fas fa-search"></i> Find PGs</a>
-      <a href="<?= BASE_URL ?>/logout.php"  class="sidebar-link" style="color:rgba(255,100,100,.8)"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </nav>
-  </div>
+  <?php require_once '../components/sidebar.php'; ?>
 
   <!-- Main -->
   <div class="main-content">

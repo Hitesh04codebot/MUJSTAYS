@@ -39,3 +39,83 @@ Enter this code on the verification page to activate your account.
 
 ========================================
 
+========================================
+[2026-04-13 12:39:17] TO: Arjun Singh <student@mujstays.com>
+SUBJECT: Booking Request Sent — Kumawat Hostel
+BODY: 
+
+
+  body{font-family:Inter,Arial,sans-serif;background:#f8fafc;margin:0;padding:0}
+  .wrap{max-width:600px;margin:30px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1)}
+  .header{background:linear-gradient(135deg,#1A3C5E,#2E86AB);padding:30px;text-align:center}
+  .header h1{color:#fff;margin:0;font-size:24px}
+  .header p{color:rgba(255,255,255,.8);margin:5px 0 0}
+  .body{padding:30px}
+  .body h2{color:#1A3C5E;margin-top:0}
+  .otp-box{background:#f0f7ff;border:2px dashed #2E86AB;border-radius:8px;padding:20px;text-align:center;margin:20px 0}
+  .otp{font-size:36px;font-weight:700;letter-spacing:8px;color:#1A3C5E}
+  .btn{display:inline-block;background:#2E86AB;color:#fff!important;padding:14px 30px;border-radius:8px;text-decoration:none;font-weight:600;margin:15px 0}
+  .footer{background:#f8fafc;padding:20px;text-align:center;color:#666;font-size:13px;border-top:1px solid #e2e8f0}
+
+
+  
+    🏠 MUJSTAYS
+    PG Discovery & Booking Platform for MUJ Students
+  
+  
+    Booking Request Pending
+    Hi Arjun Singh,
+Your booking request for Kumawat Hostel has been successfully sent to the owner!
+We'll notify you as soon as the owner accepts or declines your request (usually within 24 hours).
+Move-in Date: 2026-04-17
+Total Amount: ₹95,000
+View Bookings
+  
+  
+    © 2025 MUJSTAYS. Built for MUJ Students, Jaipur.
+    If you didn't request this email, please ignore it.
+  
+
+
+========================================
+
+========================================
+[2026-04-13 12:40:11] TO: Arjun Singh <student@mujstays.com>
+SUBJECT: Booking Request Sent — Scholars Pg
+BODY: 
+
+
+  body{font-family:Inter,Arial,sans-serif;background:#f8fafc;margin:0;padding:0}
+  .wrap{max-width:600px;margin:30px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1)}
+  .header{background:linear-gradient(135deg,#1A3C5E,#2E86AB);padding:30px;text-align:center}
+  .header h1{color:#fff;margin:0;font-size:24px}
+  .header p{color:rgba(255,255,255,.8);margin:5px 0 0}
+  .body{padding:30px}
+  .body h2{color:#1A3C5E;margin-top:0}
+  .otp-box{background:#f0f7ff;border:2px dashed #2E86AB;border-radius:8px;padding:20px;text-align:center;margin:20px 0}
+  .otp{font-size:36px;font-weight:700;letter-spacing:8px;color:#1A3C5E}
+  .btn{display:inline-block;background:#2E86AB;color:#fff!important;padding:14px 30px;border-radius:8px;text-decoration:none;font-weight:600;margin:15px 0}
+  .footer{background:#f8fafc;padding:20px;text-align:center;color:#666;font-size:13px;border-top:1px solid #e2e8f0}
+
+
+  
+    🏠 MUJSTAYS
+    PG Discovery & Booking Platform for MUJ Students
+  
+  
+    Booking Request Pending
+    Hi Arjun Singh,
+Your booking request for Scholars Pg has been successfully sent to the owner!
+We'll notify you as soon as the owner accepts or declines your request (usually within 24 hours).
+Move-in Date: 2026-04-18
+Total Amount: ₹70,000
+View Bookings
+  
+  
+    © 2025 MUJSTAYS. Built for MUJ Students, Jaipur.
+    If you didn't request this email, please ignore it.
+  
+
+
+========================================
+

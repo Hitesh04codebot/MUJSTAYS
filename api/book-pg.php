@@ -35,9 +35,9 @@ if ($dup->fetch()) { echo json_encode(['error'=>'You already have an active book
 $total = ($rt['price_per_month']*$duration)+$rt['security_deposit'];
 $advance= $pay_opt==='online' ? $rt['security_deposit'] : 0;
 
-$pdo->prepare("INSERT INTO bookings (student_id,pg_id,room_type_id,owner_id,move_in_date,duration_months,total_amount,advance_paid,booking_type,status) VALUES (?,?,?,?,?,?,?,?,?,'pending')")
-    ->execute([$uid,$pg_id,$rt_id,$rt['owner_id'],$mov_in,$duration,$total,$advance,$pay_opt]);
-$booking_id=$pdo->lastInsertId();
+$pdo->prepare("INSERT INTO bookings (student_id, pg_id, room_type_id, owner_id, move_in_date, duration_months, total_amount, advance_paid, security_deposit, payment_option, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')")
+    ->execute([$uid, $pg_id, $rt_id, $rt['owner_id'], $mov_in, $duration, $total, $advance, $rt['security_deposit'], $pay_opt]);
+$booking_id = $pdo->lastInsertId();
 
 // Notify owner
 create_notification($pdo,$rt['owner_id'],'booking_request','New Booking Request 🔔','A student has sent a booking request for "'.$rt['pg_title'].'". Review it now.','/owner/bookings.php');

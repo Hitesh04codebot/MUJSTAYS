@@ -47,24 +47,7 @@ $top_pgs = $pdo->query("SELECT p.title, p.area_name, COUNT(b.id) AS bookings FRO
 </head><body>
 <?php require_once '../components/navbar.php'; ?>
 <div class="dashboard-layout">
-  <div class="sidebar">
-    <div class="sidebar-logo"><h3>⚙️ Admin Panel</h3><p>MUJSTAYS Operations</p></div>
-    <nav class="sidebar-menu">
-      <div class="sidebar-section">Overview</div>
-      <a href="dashboard.php"    class="sidebar-link active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-      <div class="sidebar-section">Moderation</div>
-      <a href="listings.php"     class="sidebar-link"><i class="fas fa-home"></i> Listings <?php if($stats['pending_listings']>0): ?><span class="badge badge-warning" style="font-size:10px;margin-left:auto"><?= $stats['pending_listings'] ?></span><?php endif; ?></a>
-      <a href="users.php"        class="sidebar-link"><i class="fas fa-users"></i> Users</a>
-      <a href="complaints.php"   class="sidebar-link"><i class="fas fa-flag"></i> Complaints <?php if($stats['open_complaints']>0): ?><span class="badge badge-danger" style="font-size:10px;margin-left:auto"><?= $stats['open_complaints'] ?></span><?php endif; ?></a>
-      <div class="sidebar-section">Finance</div>
-      <a href="bookings.php"     class="sidebar-link"><i class="fas fa-calendar-check"></i> All Bookings</a>
-      <a href="payments.php"     class="sidebar-link"><i class="fas fa-money-bill-wave"></i> Payments</a>
-      <div class="sidebar-section">Communication</div>
-      <a href="notifications.php" class="sidebar-link"><i class="fas fa-bell"></i> Notifications</a>
-      <div class="sidebar-section">Account</div>
-      <a href="<?= BASE_URL ?>/logout.php" class="sidebar-link" style="color:rgba(255,100,100,.8)"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </nav>
-  </div>
+  <?php require_once '../components/sidebar.php'; ?>
 
   <div class="main-content">
     <div style="margin-bottom:28px"><h2 style="margin-bottom:4px">Admin Dashboard</h2><p style="color:var(--text-muted);margin:0">Platform overview — <?= date('d F Y') ?></p></div>
@@ -132,5 +115,4 @@ new Chart(document.getElementById('commissionChart'), {
 });
 <?php endif; ?>
 </script>
-<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
 </body></html>

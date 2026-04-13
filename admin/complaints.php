@@ -59,23 +59,7 @@ $complaints = $stmt->fetchAll();
 <body>
 <?php require_once '../components/navbar.php'; ?>
 <div class="dashboard-layout">
-    <div class="sidebar">
-        <div class="sidebar-logo"><h3>⚙️ Admin Panel</h3><p>MUJSTAYS Operations</p></div>
-        <nav class="sidebar-menu">
-            <div class="sidebar-section">Overview</div>
-            <a href="dashboard.php"    class="sidebar-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            <div class="sidebar-section">Moderation</div>
-            <a href="listings.php"     class="sidebar-link"><i class="fas fa-home"></i> Listings</a>
-            <a href="users.php"        class="sidebar-link"><i class="fas fa-users"></i> Users</a>
-            <a href="complaints.php"   class="sidebar-link active"><i class="fas fa-flag"></i> Complaints</a>
-            <div class="sidebar-section">Finance</div>
-            <a href="bookings.php"     class="sidebar-link"><i class="fas fa-calendar-check"></i> All Bookings</a>
-            <a href="payments.php"     class="sidebar-link"><i class="fas fa-money-bill-wave"></i> Payments</a>
-            <div class="sidebar-section">Communication</div>
-            <a href="notifications.php" class="sidebar-link"><i class="fas fa-bell"></i> Notifications</a>
-            <a href="<?= BASE_URL ?>/logout.php" class="sidebar-link" style="color:rgba(255,100,100,.8)"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </nav>
-    </div>
+    <?php require_once '../components/sidebar.php'; ?>
 
     <div class="main-content">
         <h2 class="mb-24">Complaints & Disputes</h2>
