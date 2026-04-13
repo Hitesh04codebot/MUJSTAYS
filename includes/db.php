@@ -21,15 +21,17 @@ if (!function_exists('get_db')) {
             try {
                 $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
             } catch (PDOException $e) {
-                if (defined('DEBUG_MODE') && DEBUG_MODE) {
-                    die('<div style="background:#fee;padding:20px;font-family:monospace;border-left:4px solid red">
-                        <strong>Database Connection Failed:</strong><br>' . htmlspecialchars($e->getMessage()) . '
-                    </div>');
-                } else {
-                    error_log('DB Connect Error: ' . $e->getMessage());
-                    die('<h3>Service temporarily unavailable. Please try again later.</h3>');
-                }
+                // For PBL evaluation debugging, we show the full error
+                die('<div style="background:#fee;padding:20px;font-family:monospace;border-left:4px solid red">
+                    <strong>Database Connection Failed:</strong><br>' . htmlspecialchars($e->getMessage()) . '
+                    <br><br><strong>Current Config:</strong><br>
+                    Host: ' . DB_HOST . '<br>
+                    Port: ' . DB_PORT . '<br>
+                    DB: ' . DB_NAME . '<br>
+                    User: ' . DB_USER . '
+                </div>');
             }
+
         }
         return $pdo;
     }
