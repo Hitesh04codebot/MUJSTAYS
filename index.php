@@ -328,9 +328,6 @@ $areas_icons = [
 </section>
 
 <?php require_once 'components/footer.php'; ?>
-
-
-<script>data-base-url="<?= BASE_URL ?>"; var BASE_URL='<?= BASE_URL ?>';</script>
-<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
 </body>
 </html>
+

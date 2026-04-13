@@ -31,21 +31,7 @@ $stmt->execute([$uid]); $saved=$stmt->fetchAll();
 </head><body>
 <?php require_once '../components/navbar.php'; ?>
 <div class="dashboard-layout">
-  <div class="sidebar">
-    <div class="sidebar-logo"><h3>🎓 Student</h3><p><?= htmlspecialchars($_SESSION['name']) ?></p></div>
-    <nav class="sidebar-menu">
-      <a href="dashboard.php" class="sidebar-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-      <a href="bookings.php"  class="sidebar-link"><i class="fas fa-calendar-check"></i> My Bookings</a>
-      <a href="saved.php"     class="sidebar-link active"><i class="fas fa-heart"></i> Saved PGs</a>
-      <a href="compare.php"   class="sidebar-link"><i class="fas fa-balance-scale"></i> Compare</a>
-      <a href="chat.php"      class="sidebar-link"><i class="fas fa-comments"></i> Messages</a>
-      <a href="notifications.php" class="sidebar-link"><i class="fas fa-bell"></i> Notifications</a>
-      <a href="reviews.php"   class="sidebar-link"><i class="fas fa-star"></i> Reviews</a>
-      <a href="payments.php"  class="sidebar-link"><i class="fas fa-receipt"></i> Payments</a>
-      <a href="profile.php"   class="sidebar-link"><i class="fas fa-user"></i> Profile</a>
-      <a href="<?= BASE_URL ?>/logout.php" class="sidebar-link" style="color:rgba(255,100,100,.8)"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </nav>
-  </div>
+  <?php require_once '../components/sidebar.php'; ?>
   <div class="main-content">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
       <h2 style="margin:0">Saved PGs <span style="font-size:16px;color:var(--text-muted);font-weight:400">(<?= $total ?>)</span></h2>
@@ -69,6 +55,4 @@ $stmt->execute([$uid]); $saved=$stmt->fetchAll();
   </div>
 </div>
 <?php require_once '../components/footer.php'; ?>
-<script>var BASE_URL='<?= BASE_URL ?>';</script>
-<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
 </body></html>

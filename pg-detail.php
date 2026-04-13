@@ -431,7 +431,6 @@ $available_beds_all= array_sum(array_column($room_types, 'available_beds'));
 <?php require_once 'components/footer.php'; ?>
 
 <script>
-var BASE_URL = '<?= BASE_URL ?>';
 function switchImage(el, src) {
   document.getElementById('gallery-main-img').src = src;
   document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
@@ -439,7 +438,7 @@ function switchImage(el, src) {
   document.getElementById('lb-img').src = src;
 }
 function revealPhone(pgId) {
-  fetch(BASE_URL + '/api/reveal-phone.php?pg_id=' + pgId, { headers: { 'X-Requested-With': 'XMLHttpRequest' }})
+  fetch(window.BASE_URL + '/api/reveal-phone.php?pg_id=' + pgId, { headers: { 'X-Requested-With': 'XMLHttpRequest' }})
     .then(r => r.json()).then(d => {
       if (d.phone) document.getElementById('phone-display').innerHTML = '<a href="tel:' + d.phone + '" style="color:var(--success)">' + d.phone + '</a>';
     });
@@ -481,6 +480,6 @@ function startNavigation(destLat, destLng) {
   }
 }
 </script>
-<script src="<?= BASE_URL ?>/assets/js/main.js?v=<?= time() ?>"></script>
 </body>
 </html>
+

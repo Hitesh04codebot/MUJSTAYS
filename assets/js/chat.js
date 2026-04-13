@@ -241,7 +241,7 @@
   scrollToBottom();
 
   // Start polling
-  setInterval(pollMessages, 5000);
+  setInterval(pollMessages, 3000);
   if (currentReceiverId) pollMessages();
 
 })();

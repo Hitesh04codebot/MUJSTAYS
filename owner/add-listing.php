@@ -426,5 +426,5 @@ function toggleMapPicker() {
 
 </script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
+<?php require_once '../components/footer.php'; ?>
 </body></html>

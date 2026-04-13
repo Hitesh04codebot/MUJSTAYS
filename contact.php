@@ -65,10 +65,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             grid-template-columns: 1fr 1.5fr;
         }
         .contact-info {
-            background: var(--accent);
+            background: linear-gradient(rgba(46,134,171,0.85), rgba(46,134,171,0.85)), url('<?= BASE_URL ?>/assets/img/20943953.jpg') center/cover no-repeat;
             color: #fff;
             padding: 48px;
+            position: relative;
         }
+
         .contact-info h3 { color: #fff; margin-bottom: 24px; font-size: 1.5rem; }
         .contact-item {
             display: flex;
@@ -200,6 +202,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </main>
 
 <?php require_once 'components/footer.php'; ?>
-<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
 </body>
 </html>
+

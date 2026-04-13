@@ -130,6 +130,4 @@ $page_title = 'My Dashboard';
   </div>
 </div>
 <?php require_once '../components/footer.php'; ?>
-<script>var BASE_URL='<?= BASE_URL ?>';</script>
-<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
 </body></html>

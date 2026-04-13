@@ -15,7 +15,7 @@ $pg_id       = (int)($_GET['pg_id']??0) ?: null;
 
 if (!$receiver_id) { echo json_encode(['messages'=>[]]); exit; }
 
-$max_wait = 15; // Wait up to 15 seconds
+$max_wait = 8; // Wait up to 8 seconds
 $start = time();
 $messages = [];
 

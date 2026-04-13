@@ -105,7 +105,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <div class="auth-page">
   <div class="auth-left">
-    <div class="auth-left-content">
+    <img src="<?= BASE_URL ?>/assets/img/Wavy_Tech-28_Single-10.jpg" alt="Auth" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.15; z-index: 0;">
+    <div class="auth-left-content" style="position: relative; z-index: 1;">
+
       <div style="font-size:60px;margin-bottom:20px">🎓</div>
       <h2>Join MUJSTAYS</h2>
       <p>Create your free account and start discovering verified PGs near Manipal University Jaipur today.</p>

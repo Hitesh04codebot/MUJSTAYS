@@ -54,19 +54,7 @@ $notif_count = unread_notification_count($pdo, $uid);
 <?php require_once '../components/navbar.php'; ?>
 <div class="dashboard-layout">
   <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="sidebar-logo"><h3>🎓 Student</h3><p><?= htmlspecialchars($_SESSION['name']) ?></p></div>
-    <nav class="sidebar-menu">
-      <div class="sidebar-section">Main</div>
-      <a href="dashboard.php" class="sidebar-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-      <a href="bookings.php"  class="sidebar-link"><i class="fas fa-calendar-check"></i> My Bookings</a>
-      <a href="saved.php"     class="sidebar-link"><i class="fas fa-heart"></i> Saved PGs</a>
-      <div class="sidebar-section">Activity</div>
-      <a href="chat.php"          class="sidebar-link"><i class="fas fa-comments"></i> Messages</a>
-      <a href="notifications.php" class="sidebar-link active"><i class="fas fa-bell"></i> Notifications <?php if ($notif_count): ?><span class="badge badge-danger" style="font-size:10px;margin-left:auto"><?= $notif_count ?></span><?php endif; ?></a>
-      <a href="reviews.php"   class="sidebar-link"><i class="fas fa-star"></i> My Reviews</a>
-    </nav>
-  </div>
+  <?php require_once '../components/sidebar.php'; ?>
 
   <div class="main-content">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">

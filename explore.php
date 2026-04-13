@@ -105,14 +105,16 @@ $base_paginate_url = '?' . http_build_query($get_without_page);
 <?php require_once 'components/navbar.php'; ?>
 
 <!-- Page Header -->
-<div class="page-header">
-  <div class="container">
+<div class="page-header" style="background: url('<?= BASE_URL ?>/assets/img/explorepg.jpg') center/cover no-repeat; position: relative;">
+  <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(26,60,94,0.9) 0%, rgba(46,134,171,0.7) 100%); z-index: 1;"></div>
+  <div class="container" style="position: relative; z-index: 2;">
     <div class="breadcrumb">
       <a href="<?= BASE_URL ?>">Home</a>
       <span class="breadcrumb-sep">›</span>
       <span>Explore PGs</span>
     </div>
     <h1>Explore PGs Near MUJ</h1>
+
     <div style="display:flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
         <p style="margin:0">
           <?= number_format($total) ?> verified PG<?= $total !== 1 ? 's' : '' ?> found
@@ -197,10 +199,9 @@ $base_paginate_url = '?' . http_build_query($get_without_page);
 
 
 <?php require_once 'components/footer.php'; ?>
-<script>var BASE_URL='<?= BASE_URL ?>';</script>
-<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
 <style>
 @media(max-width:991px){#mobile-filter-toggle{display:block!important}#filter-sidebar{display:none}}
 </style>
 </body>
 </html>
+

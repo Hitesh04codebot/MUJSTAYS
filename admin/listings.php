@@ -154,6 +154,4 @@ $counts=$pdo->query("SELECT status,COUNT(*) cnt FROM pg_listings WHERE is_delete
   </div>
 </div>
 <?php require_once '../components/footer.php'; ?>
-<script>var BASE_URL='<?= BASE_URL ?>';</script>
-<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
 </body></html>

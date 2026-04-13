@@ -95,8 +95,9 @@ require_once 'includes/db.php';
                 <a href="<?= BASE_URL ?>/explore.php" class="btn btn-primary mt-16">Explore Verified PGs</a>
             </div>
             <div class="about-img">
-                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800" alt="Students in PG">
+                <img src="<?= BASE_URL ?>/assets/img/2724272.jpg" alt="About MUJSTAYS">
             </div>
+
         </div>
     </section>
 
@@ -138,6 +139,6 @@ require_once 'includes/db.php';
 </main>
 
 <?php require_once 'components/footer.php'; ?>
-<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
 </body>
 </html>
+

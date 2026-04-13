@@ -66,17 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <?php require_once '../components/navbar.php'; ?>
 <div class="dashboard-layout">
-    <div class="sidebar">
-        <div class="sidebar-logo"><h3>🎓 Student</h3><p><?= htmlspecialchars($user['name']) ?></p></div>
-        <nav class="sidebar-menu">
-            <a href="dashboard.php" class="sidebar-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            <a href="bookings.php"  class="sidebar-link"><i class="fas fa-calendar-check"></i> My Bookings</a>
-            <a href="saved.php"     class="sidebar-link"><i class="fas fa-heart"></i> Saved PGs</a>
-            <a href="chat.php"      class="sidebar-link"><i class="fas fa-comments"></i> Messages</a>
-            <a href="profile.php"   class="sidebar-link active"><i class="fas fa-user"></i> Profile</a>
-            <a href="<?= BASE_URL ?>/logout.php" class="sidebar-link" style="color:var(--danger)"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </nav>
-    </div>
+    <?php require_once '../components/sidebar.php'; ?>
     <div class="main-content">
         <h2 class="mb-24">My Profile</h2>
         

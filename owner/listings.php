@@ -43,20 +43,7 @@ $counts->execute([$uid]); $counts=array_column($counts->fetchAll(),'cnt','status
 </head><body>
 <?php require_once '../components/navbar.php'; ?>
 <div class="dashboard-layout">
-  <div class="sidebar">
-    <div class="sidebar-logo"><h3>🏘️ Owner</h3><p><?= htmlspecialchars($_SESSION['name']) ?></p></div>
-    <nav class="sidebar-menu">
-      <a href="dashboard.php"   class="sidebar-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-      <a href="listings.php"    class="sidebar-link active"><i class="fas fa-home"></i> My Listings</a>
-      <a href="add-listing.php" class="sidebar-link"><i class="fas fa-plus-circle"></i> Add Listing</a>
-      <a href="bookings.php"    class="sidebar-link"><i class="fas fa-calendar-check"></i> Bookings</a>
-      <a href="payments.php"    class="sidebar-link"><i class="fas fa-money-bill-wave"></i> Payments</a>
-      <a href="chat.php"        class="sidebar-link"><i class="fas fa-comments"></i> Messages</a>
-      <a href="reviews.php"     class="sidebar-link"><i class="fas fa-star"></i> Reviews</a>
-      <a href="profile.php"     class="sidebar-link"><i class="fas fa-user"></i> Profile & KYC</a>
-      <a href="<?= BASE_URL ?>/logout.php" class="sidebar-link" style="color:rgba(255,100,100,.8)"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </nav>
-  </div>
+  <?php require_once '../components/sidebar.php'; ?>
   <div class="main-content">
     <?php if ($m=flash_get('success')): ?><div class="alert alert-success" data-dismiss="4000"><?= htmlspecialchars($m) ?></div><?php endif; ?>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px">
@@ -123,6 +110,4 @@ $counts->execute([$uid]); $counts=array_column($counts->fetchAll(),'cnt','status
   </div>
 </div>
 <?php require_once '../components/footer.php'; ?>
-<script>var BASE_URL='<?= BASE_URL ?>';</script>
-<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
 </body></html>
