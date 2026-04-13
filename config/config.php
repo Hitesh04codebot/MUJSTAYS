@@ -5,19 +5,23 @@
 // ============================================================
 
 // --- Database (Railway / Cloud Compatible) ---
-define('DB_HOST',    getenv('MYSQLHOST') ?: 'localhost');
-define('DB_NAME',    getenv('MYSQLDATABASE') ?: 'mujstays_db');
-define('DB_USER',    getenv('MYSQLUSER') ?: 'root');
-define('DB_PASS',    getenv('MYSQLPASSWORD') ?: '');
+define('DB_HOST',    ($_ENV['MYSQLHOST'] ?? getenv('MYSQLHOST')) ?: 'localhost');
+define('DB_NAME',    ($_ENV['MYSQLDATABASE'] ?? getenv('MYSQLDATABASE')) ?: 'mujstays_db');
+define('DB_USER',    ($_ENV['MYSQLUSER'] ?? getenv('MYSQLUSER')) ?: 'root');
+define('DB_PASS',    ($_ENV['MYSQLPASSWORD'] ?? getenv('MYSQLPASSWORD')) ?: '');
 define('DB_CHARSET', 'utf8mb4');
-define('DB_PORT',    getenv('MYSQLPORT') ?: '3306');
+define('DB_PORT',    ($_ENV['MYSQLPORT'] ?? getenv('MYSQLPORT')) ?: '3306');
+
 
 
 // --- URLs & Paths ---
 $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
 $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-define('BASE_URL', $protocol . "://" . $host . '/MUJSTAYS');          // No trailing slash
+// Smart detection: If we are on localhost, use /MUJSTAYS, otherwise use root /
+$subdir = (strpos($host, 'localhost') !== false || strpos($host, '127.0.0.1') !== false) ? '/MUJSTAYS' : '';
+define('BASE_URL', $protocol . "://" . $host . $subdir);          // No trailing slash
 define('UPLOAD_PATH', __DIR__ . '/../uploads/');           // Absolute path to uploads dir
+
 
 // --- Site Identity ---
 define('SITE_NAME', 'MUJSTAYS');
