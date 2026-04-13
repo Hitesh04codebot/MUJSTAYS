@@ -5,11 +5,11 @@ require_once 'includes/db.php';
 echo "<h2>🔧 Database Sync in Progress...</h2>";
 
 $fixes = [
-    "ALTER TABLE users ADD COLUMN IF NOT EXISTS is_deleted TINYINT(1) DEFAULT 0 AFTER is_active",
-    "ALTER TABLE reviews ADD COLUMN IF NOT EXISTS is_pinned TINYINT(1) DEFAULT 0 AFTER is_approved",
-    "ALTER TABLE pg_listings ADD COLUMN IF NOT EXISTS area_name VARCHAR(100) DEFAULT NULL",
-    "ALTER TABLE kyc_documents CHANGE COLUMN IF EXISTS user_id owner_id INT UNSIGNED NOT NULL",
-    "ALTER TABLE kyc_documents CHANGE COLUMN IF EXISTS id_type doc_type VARCHAR(50) NOT NULL"
+    "ALTER TABLE users ADD COLUMN is_deleted TINYINT(1) DEFAULT 0 AFTER is_active",
+    "ALTER TABLE reviews ADD COLUMN is_pinned TINYINT(1) DEFAULT 0 AFTER is_approved",
+    "ALTER TABLE pg_listings ADD COLUMN area_name VARCHAR(100) DEFAULT NULL",
+    "ALTER TABLE kyc_documents CHANGE COLUMN user_id owner_id INT UNSIGNED NOT NULL",
+    "ALTER TABLE kyc_documents CHANGE COLUMN id_type doc_type VARCHAR(50) NOT NULL"
 ];
 
 foreach ($fixes as $sql) {
