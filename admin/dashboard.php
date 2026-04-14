@@ -24,7 +24,7 @@ $stats_q = $pdo->query("SELECT
 $activity = $pdo->query("
   (SELECT 'new_user' AS type, CONCAT(name,' registered as ',role) AS desc_text, created_at AS ts, id AS ref_id FROM users ORDER BY created_at DESC LIMIT 5)
   UNION ALL
-  (SELECT 'new_listing','New listing submitted: '||title, created_at, id FROM pg_listings WHERE status='pending' ORDER BY created_at DESC LIMIT 5)
+  (SELECT 'new_listing', CONCAT('New listing submitted: ', title), created_at, id FROM pg_listings WHERE status='pending' ORDER BY created_at DESC LIMIT 5)
   UNION ALL
   (SELECT 'new_booking','New booking request',created_at,id FROM bookings ORDER BY created_at DESC LIMIT 5)
   ORDER BY ts DESC LIMIT 15

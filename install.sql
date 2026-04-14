@@ -36,6 +36,7 @@ CREATE TABLE `users` (
   `is_verified` TINYINT(1) DEFAULT 0,
   `is_kyc_verified` TINYINT(1) DEFAULT 0,
   `is_active` TINYINT(1) DEFAULT 1,
+  `is_deleted` TINYINT(1) DEFAULT 0,
   `otp_code` VARCHAR(6) DEFAULT NULL,
   `otp_expires_at` DATETIME DEFAULT NULL,
   `login_attempts` INT DEFAULT 0,
@@ -59,7 +60,8 @@ CREATE TABLE `areas` (
 CREATE TABLE `pg_listings` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `owner_id` INT UNSIGNED NOT NULL,
-  `area_id` INT UNSIGNED NOT NULL,
+  `area_id` INT UNSIGNED DEFAULT NULL,
+  `area_name` VARCHAR(100) DEFAULT NULL,
   `title` VARCHAR(200) NOT NULL,
   `slug` VARCHAR(220) NOT NULL,
   `description` TEXT NOT NULL,
@@ -299,10 +301,10 @@ INSERT INTO `users` (`id`, `name`, `email`, `password_hash`, `phone`, `role`, `g
 (5, 'Priya Gupta', 'priya@mujstays.com', '$2y$10$8.7.Z1D1Z1D1Z1D1Z1D1Z1u', '+919911223344', 'student', 'female', 1, 0, 1);
 
 -- 3. Listings
-INSERT INTO `pg_listings` (`id`, `owner_id`, `area_id`, `title`, `slug`, `description`, `address`, `distance_from_muj`, `price_min`, `price_max`, `gender_preference`, `has_food`, `has_wifi`, `has_ac`, `has_parking`, `has_laundry`, `has_cctv`, `has_warden`, `status`, `is_featured`, `avg_rating`, `total_reviews`) VALUES
-(1, 3, 1, 'Shanti Girls PG Near MUJ Gate 2', 'shanti-girls-pg-near-muj-gate-2', 'A premium girls PG with all modern amenities just 500 meters from MUJ Gate 2.', 'Plot 47, Jagatpura, Jaipur - 302017', 0.50, 7000, 12000, 'female', 1, 1, 1, 0, 1, 1, 1, 'approved', 1, 4.50, 12),
-(2, 2, 1, 'Boys PG Jagatpura MUJ Campus', 'boys-pg-jagatpura-muj-campus', 'Spacious boys PG with Wi-Fi, AC rooms, and flexible meal plans.', 'B-112, Sector 7, Jagatpura, Jaipur - 302017', 0.80, 5500, 9000, 'male', 1, 1, 0, 1, 0, 1, 0, 'approved', 1, 4.20, 8),
-(3, 3, 2, 'Sunita Ladies PG - Govindpura', 'sunita-ladies-pg-govindpura', 'Well-maintained ladies PG in quiet locality.', 'C-34, Govindpura Main Road, Jaipur', 2.10, 6000, 10000, 'female', 1, 1, 1, 0, 1, 1, 1, 'approved', 1, 4.70, 15);
+INSERT INTO `pg_listings` (`id`, `owner_id`, `area_id`, `area_name`, `title`, `slug`, `description`, `address`, `distance_from_muj`, `price_min`, `price_max`, `gender_preference`, `has_food`, `has_wifi`, `has_ac`, `has_parking`, `has_laundry`, `has_cctv`, `has_warden`, `status`, `is_featured`, `avg_rating`, `total_reviews`) VALUES
+(1, 3, 1, 'Jagatpura', 'Shanti Girls PG Near MUJ Gate 2', 'shanti-girls-pg-near-muj-gate-2', 'A premium girls PG with all modern amenities just 500 meters from MUJ Gate 2.', 'Plot 47, Jagatpura, Jaipur - 302017', 0.50, 7000, 12000, 'female', 1, 1, 1, 0, 1, 1, 1, 'approved', 1, 4.50, 12),
+(2, 2, 1, 'Jagatpura', 'Boys PG Jagatpura MUJ Campus', 'boys-pg-jagatpura-muj-campus', 'Spacious boys PG with Wi-Fi, AC rooms, and flexible meal plans.', 'B-112, Sector 7, Jagatpura, Jaipur - 302017', 0.80, 5500, 9000, 'male', 1, 1, 0, 1, 0, 1, 0, 'approved', 1, 4.20, 8),
+(3, 3, 2, 'Govindpura', 'Sunita Ladies PG - Govindpura', 'sunita-ladies-pg-govindpura', 'Well-maintained ladies PG in quiet locality.', 'C-34, Govindpura Main Road, Jaipur', 2.10, 6000, 10000, 'female', 1, 1, 1, 0, 1, 1, 1, 'approved', 1, 4.70, 15);
 
 -- 4. Room Types
 INSERT INTO `room_types` (`pg_id`, `type`, `price_per_month`, `security_deposit`, `total_beds`, `available_beds`) VALUES
