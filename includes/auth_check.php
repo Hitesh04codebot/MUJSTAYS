@@ -40,13 +40,7 @@ function require_auth(string $required_role = '', string $redirect_to = ''): voi
     // Admins bypass email verification requirement
     if (($_SESSION['role'] ?? '') === 'admin') return;
 
-    // Require verified email
-    if (empty($_SESSION['is_verified'])) {
-        if (basename($_SERVER['PHP_SELF']) !== 'verify-email.php') {
-            header('Location: ' . BASE_URL . '/verify-email.php');
-            exit;
-        }
-    }
+    // Email verification requirement removed
 }
 
 /**

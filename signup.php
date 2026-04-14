@@ -43,8 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $otp  = generate_otp();
                 $otp_expires = date('Y-m-d H:i:s', strtotime('+' . OTP_EXPIRY_MINUTES . ' minutes'));
 
-                $stmt = $pdo->prepare("INSERT INTO users (name, email, password_hash, phone, role, gender, otp_code, otp_expires_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->execute([$name, $email, $hash, $phone ?: null, $role, $gender, $otp, $otp_expires]);
+                $stmt = $pdo->prepare("INSERT INTO users (name, email, password_hash, phone, role, gender, is_verified) VALUES (?, ?, ?, ?, ?, ?, 1)");
+                $stmt->execute([$name, $email, $hash, $phone ?: null, $role, $gender]);
                 $user_id = $pdo->lastInsertId();
 
                 // Handle Owner specific fields and KYC
@@ -73,9 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 if (!$error) {
-                    // Send OTP Dual-Channel
-                    send_otp_email($email, $name, $otp);
-                    if ($phone) send_otp_sms($phone, $otp);
+                    // OTP verification removed for easier testing/deployment
 
                     // Set session
                     session_regenerate_id(true);
@@ -83,10 +81,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['name']        = $name;
                     $_SESSION['role']        = $role;
                     $_SESSION['email']       = $email;
-                    $_SESSION['is_verified'] = 0;
+                    $_SESSION['is_verified'] = 1;
                     $_SESSION['is_active']   = 1;
 
-                    redirect(BASE_URL . '/verify-email.php');
+                    flash_set('success', 'Account created successfully! Welcome to MUJSTAYS.');
+                    redirect(BASE_URL . '/index.php');
                 }
             }
         }

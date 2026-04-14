@@ -62,9 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     setcookie(session_name(), session_id(), time() + SESSION_LIFETIME, '/');
                 }
 
-                if (!$user['is_verified']) {
-                    redirect(BASE_URL . '/verify-email.php');
-                }
+                // Verification check bypassed for ease of use
 
                 $dash = match($user['role']) {
                     'student' => BASE_URL . '/user/dashboard.php',

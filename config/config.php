@@ -50,21 +50,25 @@ define('MUJ_LAT', 26.8370);             // MUJ Main Gate coordinates
 define('MUJ_LNG', 75.5560);
 
 // --- Payment Gateway (Razorpay) ---
-define('RAZORPAY_KEY_ID', 'rzp_test_YOUR_KEY_ID');
-define('RAZORPAY_KEY_SECRET', 'YOUR_KEY_SECRET');
+define('RAZORPAY_KEY_ID',     $_ENV['RAZORPAY_KEY_ID'] ?? 'rzp_test_YOUR_KEY_ID');
+define('RAZORPAY_KEY_SECRET', $_ENV['RAZORPAY_KEY_SECRET'] ?? 'YOUR_KEY_SECRET');
 
 // --- Email / SMTP ---
-define('SMTP_HOST', 'smtp.gmail.com');
-define('SMTP_USER', 'hiteshkandari@gmail.com');
-define('SMTP_PASS', 'mlyq tung sbqy ioxe');
-define('SMTP_PORT', 587);
-define('SMTP_SECURE', 'tls');
+define('SMTP_HOST',   $_ENV['SMTP_HOST']   ?? 'smtp.gmail.com');
+define('SMTP_USER',   $_ENV['SMTP_USER']   ?? 'hiteshkandari@gmail.com');
+define('SMTP_PASS',   $_ENV['SMTP_PASS']   ?? 'mlyq tung sbqy ioxe');
+define('SMTP_PORT',   $_ENV['SMTP_PORT']   ?? 587);
+define('SMTP_SECURE', $_ENV['SMTP_SECURE'] ?? 'tls');
 
 // --- Google Maps ---
 define('GOOGLE_MAPS_API_KEY', 'YOUR_GOOGLE_MAPS_API_KEY');
 
+// --- Cloudinary (for Render production) ---
+define('CLOUDINARY_URL', $_ENV['CLOUDINARY_URL'] ?? ''); // Standard Cloudinary Env Var
+define('USE_CLOUDINARY', !empty(CLOUDINARY_URL));
+
 // --- Debug Mode ---
-define('DEBUG_MODE', true); // Set to false on production
+define('DEBUG_MODE', ($_ENV['APP_DEBUG'] ?? 'true') === 'true'); // Set APP_DEBUG environment variable to 'false' on production
 
 // --- Error Handling ---
 if (DEBUG_MODE) {

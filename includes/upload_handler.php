@@ -46,10 +46,50 @@ function handle_upload(array $file, string $subdirectory, bool $is_image = true)
     ];
     $ext = $ext_map[$mime] ?? 'bin';
 
-    // --- Generate random safe filename ---
+    // --- Determine destination ---
     $filename = bin2hex(random_bytes(16)) . '_' . uniqid() . '.' . $ext;
 
-    // --- Build destination path ---
+    // --- CLOUDINARY UPLOAD (Render/Production) ---
+    if (defined('USE_CLOUDINARY') && USE_CLOUDINARY) {
+        $cloudinary_url = CLOUDINARY_URL;
+        
+        // Extract credentials from CLOUDINARY_URL
+        // Format: cloudinary://api_key:api_secret@cloud_name
+        $parsed = parse_url($cloudinary_url);
+        $cloud_name = $parsed['host'];
+        $api_key = $parsed['user'];
+        $api_secret = $parsed['pass'];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api.cloudinary.com/v1_1/$cloud_name/" . ($is_image ? 'image' : 'video') . "/upload");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        
+        $timestamp = time();
+        $signature_data = "folder=mujstays/" . trim($subdirectory, '/') . "&timestamp=$timestamp$api_secret";
+        $signature = sha1($signature_data);
+
+        $post_fields = [
+            'file' => new CURLFile($file['tmp_name']),
+            'api_key' => $api_key,
+            'timestamp' => $timestamp,
+            'signature' => $signature,
+            'folder' => 'mujstays/' . trim($subdirectory, '/')
+        ];
+        
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        
+        $response = json_decode($result, true);
+        if (isset($response['secure_url'])) {
+            return $response['secure_url'];
+        } else {
+            throw new Exception('Cloudinary upload failed: ' . ($response['error']['message'] ?? 'Unknown error'));
+        }
+    }
+
+    // --- LOCAL FILESYSTEM UPLOAD ---
     $dest_dir = rtrim(UPLOAD_PATH, '/') . '/' . trim($subdirectory, '/') . '/';
     if (!is_dir($dest_dir)) {
         mkdir($dest_dir, 0755, true);

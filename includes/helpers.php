@@ -258,19 +258,32 @@ function truncate(string $text, int $length = 80): string {
 }
 
 /**
+ * Get the full URL for an asset (handles local path vs remote URL)
+ */
+function get_asset_url(?string $path, string $placeholder = ''): string {
+    if (!$path) return $placeholder ? get_asset_url($placeholder) : '';
+    // If it's already a full URL, return it
+    if (preg_match('/^(https?:\/\/|\/\/)/i', $path)) {
+        return $path;
+    }
+    // Otherwise, prepend BASE_URL
+    return BASE_URL . '/' . ltrim($path, '/');
+}
+
+/**
  * Get the cover image path for a PG or return placeholder
  */
 function get_pg_cover(PDO $pdo, int $pg_id): string {
     $stmt = $pdo->prepare("SELECT file_path FROM pg_images WHERE pg_id = ? AND is_cover = 1 LIMIT 1");
     $stmt->execute([$pg_id]);
     $row = $stmt->fetch();
-    if ($row) return BASE_URL . '/' . ltrim($row['file_path'], '/');
+    if ($row) return get_asset_url($row['file_path']);
     // Try any image
     $stmt = $pdo->prepare("SELECT file_path FROM pg_images WHERE pg_id = ? ORDER BY sort_order LIMIT 1");
     $stmt->execute([$pg_id]);
     $row = $stmt->fetch();
-    if ($row) return BASE_URL . '/' . ltrim($row['file_path'], '/');
-    return BASE_URL . '/assets/images/pg-placeholder.jpg';
+    if ($row) return get_asset_url($row['file_path']);
+    return get_asset_url('assets/images/pg-placeholder.jpg');
 }
 
 /**

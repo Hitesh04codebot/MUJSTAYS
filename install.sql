@@ -1,10 +1,10 @@
--- MUJSTAYS Database — Clean Install Script
--- Use this to set up or reset your database. 
--- WARNING: This will delete all existing data in the listed tables!
+-- MUJSTAYS Master Database Install Script
+-- Deployment Ready (Render, Filess.io, Localhost compatible)
+-- WARNING: This will drop existing tables and reset all data!
 
 SET FOREIGN_KEY_CHECKS = 0;
 
--- Drop tables in reverse dependency order
+-- Drop existing tables
 DROP TABLE IF EXISTS `contact_messages`;
 DROP TABLE IF EXISTS `compare_sessions`;
 DROP TABLE IF EXISTS `complaints`;
@@ -32,7 +32,7 @@ CREATE TABLE `users` (
   `phone` VARCHAR(15) DEFAULT NULL,
   `role` ENUM('student', 'owner', 'admin') NOT NULL DEFAULT 'student',
   `gender` ENUM('male', 'female', 'other') DEFAULT NULL,
-  `profile_photo` VARCHAR(255) DEFAULT NULL,
+  `profile_photo` VARCHAR(300) DEFAULT NULL,
   `is_verified` TINYINT(1) DEFAULT 0,
   `is_kyc_verified` TINYINT(1) DEFAULT 0,
   `is_active` TINYINT(1) DEFAULT 1,
@@ -66,6 +66,7 @@ CREATE TABLE `pg_listings` (
   `address` VARCHAR(300) NOT NULL,
   `latitude` DECIMAL(10,8) NOT NULL DEFAULT 26.84000000,
   `longitude` DECIMAL(11,8) NOT NULL DEFAULT 75.56000000,
+  `distance_from_muj` DECIMAL(5,2) DEFAULT NULL,
   `price_min` INT UNSIGNED NOT NULL,
   `price_max` INT UNSIGNED NOT NULL,
   `gender_preference` ENUM('male', 'female', 'any') NOT NULL DEFAULT 'any',
@@ -77,6 +78,7 @@ CREATE TABLE `pg_listings` (
   `has_gym` TINYINT(1) DEFAULT 0,
   `has_cctv` TINYINT(1) DEFAULT 0,
   `has_warden` TINYINT(1) DEFAULT 0,
+  `has_transport` TINYINT(1) DEFAULT 0,
   `rules` TEXT DEFAULT NULL,
   `status` ENUM('draft', 'pending', 'approved', 'rejected', 'inactive') DEFAULT 'draft',
   `rejection_reason` TEXT DEFAULT NULL,
@@ -89,6 +91,7 @@ CREATE TABLE `pg_listings` (
   `is_deleted` TINYINT(1) DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`),
+  KEY `owner_id` (`owner_id`),
   CONSTRAINT `fk_pg_owner` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_pg_area` FOREIGN KEY (`area_id`) REFERENCES `areas` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -111,7 +114,7 @@ CREATE TABLE `room_types` (
 CREATE TABLE `pg_images` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `pg_id` INT UNSIGNED NOT NULL,
-  `file_path` VARCHAR(300) NOT NULL,
+  `file_path` VARCHAR(500) NOT NULL,
   `is_cover` TINYINT(1) DEFAULT 0,
   `sort_order` INT DEFAULT 0,
   `uploaded_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -178,7 +181,6 @@ CREATE TABLE `reviews` (
   CONSTRAINT `fk_review_student` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_review_booking` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 
 -- 9. Messages table
 CREATE TABLE `messages` (
@@ -264,18 +266,22 @@ CREATE TABLE `contact_messages` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- 15. Compare Sessions table
+CREATE TABLE `compare_sessions` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `student_id` INT UNSIGNED NOT NULL,
+  `pg_ids` JSON NOT NULL,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_compare_student` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 -- ===========================
 -- SEED DATA
 -- ===========================
 
--- Admin user (password: Admin@1234 -> admin123 for simplicity in docs)
--- Actually using the hash from PRD/previous context
--- admin123: $2y$10$8.7.Z1D1Z1D1Z1D1Z1D1Z1u
--- Let's use the one the user provided in the error message for consistency
-INSERT INTO `users` (`id`, `name`, `email`, `password_hash`, `phone`, `role`, `gender`, `is_verified`, `is_kyc_verified`, `is_active`) VALUES
-(1, 'Admin MUJSTAYS', 'admin@mujstays.com', '$2y$12$K8REiQGkK8F.3JO1n7S6hOmxAkXCPc8qhvEL0gY9pMj3wRYN4dLgy', '+919876543210', 'admin', NULL, 1, 0, 1);
-
--- Areas
+-- 1. Areas
 INSERT INTO `areas` (`id`, `name`, `distance_from_muj`) VALUES
 (1, 'Jagatpura', 0.50),
 (2, 'Govindpura', 2.10),
@@ -283,25 +289,31 @@ INSERT INTO `areas` (`id`, `name`, `distance_from_muj`) VALUES
 (4, 'Tonk Road', 3.50),
 (5, 'Agra Road', 4.80);
 
--- Owners
+-- 2. Users (Admin, Owners, Students)
+-- Passwords: admin123, owner123, student123 (hashed)
 INSERT INTO `users` (`id`, `name`, `email`, `password_hash`, `phone`, `role`, `gender`, `is_verified`, `is_kyc_verified`, `is_active`) VALUES
+(1, 'Admin MUJSTAYS', 'admin@mujstays.com', '$2y$12$K8REiQGkK8F.3JO1n7S6hOmxAkXCPc8qhvEL0gY9pMj3wRYN4dLgy', '+919876543210', 'admin', NULL, 1, 0, 1),
 (2, 'Ramesh Sharma', 'owner@mujstays.com', '$2y$10$8.7.Z1D1Z1D1Z1D1Z1D1Z1u', '+919812345678', 'owner', 'male', 1, 1, 1),
-(3, 'Sunita Verma', 'sunita@mujstays.com', '$2y$10$8.7.Z1D1Z1D1Z1D1Z1D1Z1u', '+919898765432', 'owner', 'female', 1, 1, 1);
+(3, 'Sunita Verma', 'sunita@mujstays.com', '$2y$10$8.7.Z1D1Z1D1Z1D1Z1D1Z1u', '+919898765432', 'owner', 'female', 1, 1, 1),
+(4, 'Arjun Singh', 'student@mujstays.com', '$2y$10$8.7.Z1D1Z1D1Z1D1Z1D1Z1u', '+919900112233', 'student', 'male', 1, 0, 1),
+(5, 'Priya Gupta', 'priya@mujstays.com', '$2y$10$8.7.Z1D1Z1D1Z1D1Z1D1Z1u', '+919911223344', 'student', 'female', 1, 0, 1);
 
--- Students
-INSERT INTO `users` (`id`, `name`, `email`, `password_hash`, `phone`, `role`, `gender`, `is_verified`, `is_active`) VALUES
-(4, 'Arjun Singh', 'student@mujstays.com', '$2y$10$8.7.Z1D1Z1D1Z1D1Z1D1Z1u', '+919900112233', 'student', 'male', 1, 1),
-(5, 'Priya Gupta', 'priya@mujstays.com', '$2y$10$8.7.Z1D1Z1D1Z1D1Z1D1Z1u', '+919911223344', 'student', 'female', 1, 1);
+-- 3. Listings
+INSERT INTO `pg_listings` (`id`, `owner_id`, `area_id`, `title`, `slug`, `description`, `address`, `distance_from_muj`, `price_min`, `price_max`, `gender_preference`, `has_food`, `has_wifi`, `has_ac`, `has_parking`, `has_laundry`, `has_cctv`, `has_warden`, `status`, `is_featured`, `avg_rating`, `total_reviews`) VALUES
+(1, 3, 1, 'Shanti Girls PG Near MUJ Gate 2', 'shanti-girls-pg-near-muj-gate-2', 'A premium girls PG with all modern amenities just 500 meters from MUJ Gate 2.', 'Plot 47, Jagatpura, Jaipur - 302017', 0.50, 7000, 12000, 'female', 1, 1, 1, 0, 1, 1, 1, 'approved', 1, 4.50, 12),
+(2, 2, 1, 'Boys PG Jagatpura MUJ Campus', 'boys-pg-jagatpura-muj-campus', 'Spacious boys PG with Wi-Fi, AC rooms, and flexible meal plans.', 'B-112, Sector 7, Jagatpura, Jaipur - 302017', 0.80, 5500, 9000, 'male', 1, 1, 0, 1, 0, 1, 0, 'approved', 1, 4.20, 8),
+(3, 3, 2, 'Sunita Ladies PG - Govindpura', 'sunita-ladies-pg-govindpura', 'Well-maintained ladies PG in quiet locality.', 'C-34, Govindpura Main Road, Jaipur', 2.10, 6000, 10000, 'female', 1, 1, 1, 0, 1, 1, 1, 'approved', 1, 4.70, 15);
 
--- Listings
-INSERT INTO `pg_listings` (`id`, `owner_id`, `area_id`, `title`, `slug`, `description`, `address`, `price_min`, `price_max`, `gender_preference`, `has_food`, `has_wifi`, `has_ac`, `has_parking`, `has_laundry`, `has_cctv`, `has_warden`, `status`, `is_featured`, `avg_rating`, `total_reviews`) VALUES
-(1, 3, 1, 'Shanti Girls PG Near MUJ Gate 2', 'shanti-girls-pg-near-muj-gate-2', 'A premium girls PG with all modern amenities just 500 meters from MUJ Gate 2. Safe, clean, and well-managed with 24/7 security and home-cooked meals.', 'Plot 47, Jagatpura Marg, Near MUJ Gate 2, Jagatpura, Jaipur - 302017', 7000, 12000, 'female', 1, 1, 1, 0, 1, 1, 1, 'approved', 1, 4.50, 12),
-(2, 2, 1, 'Boys PG Jagatpura MUJ Campus', 'boys-pg-jagatpura-muj-campus', 'Spacious boys PG with Wi-Fi, AC rooms, and flexible meal plans. Walking distance from MUJ. Ideal for engineering and tech students.', 'B-112, Sector 7, Jagatpura, Jaipur - 302017', 5500, 9000, 'male', 1, 1, 0, 1, 0, 1, 0, 'approved', 1, 4.20, 8),
-(3, 3, 2, 'Sunita Ladies PG - Govindpura', 'sunita-ladies-pg-govindpura', 'Well-maintained ladies PG in quiet Govindpura locality. AC and non-AC rooms available. Home food, laundry, and housekeeping included.', 'C-34, Govindpura Main Road, Jaipur - 302012', 6000, 10000, 'female', 1, 1, 1, 0, 1, 1, 1, 'approved', 1, 4.70, 15);
-
--- Room Types
+-- 4. Room Types
 INSERT INTO `room_types` (`pg_id`, `type`, `price_per_month`, `security_deposit`, `total_beds`, `available_beds`) VALUES
 (1, 'single', 12000, 15000, 5, 3),
 (1, 'double', 8000, 10000, 8, 5),
 (2, 'single', 9000, 12000, 4, 2),
 (2, 'double', 6500, 8000, 10, 6);
+
+-- 5. PG Images (Remote URLs for instant professional look)
+INSERT INTO `pg_images` (`pg_id`, `file_path`, `is_cover`, `sort_order`) VALUES
+(1, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=1200', 1, 1),
+(1, 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&q=80&w=1200', 0, 2),
+(2, 'https://images.unsplash.com/photo-1555854817-5b2337a884f9?auto=format&fit=crop&q=80&w=1200', 1, 1),
+(3, 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200', 1, 1);

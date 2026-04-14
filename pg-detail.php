@@ -114,14 +114,14 @@ $available_beds_all= array_sum(array_column($room_types, 'available_beds'));
       <div>
         <!-- Gallery -->
         <div class="gallery-main" style="margin-bottom:8px">
-          <?php $main_img = !empty($images) ? (BASE_URL . '/' . ltrim($images[0]['file_path'], '/')) : (BASE_URL . '/assets/images/pg-placeholder.jpg'); ?>
+          <?php $main_img = !empty($images) ? get_asset_url($images[0]['file_path']) : get_asset_url('assets/images/pg-placeholder.jpg'); ?>
           <img src="<?= $main_img ?>" alt="<?= htmlspecialchars($pg['title']) ?>" id="gallery-main-img">
         </div>
         <?php if (count($images) > 1): ?>
         <div class="gallery-thumbs">
           <?php foreach ($images as $i => $img): ?>
-          <div class="gallery-thumb <?= $i === 0 ? 'active' : '' ?>" onclick="switchImage(this,'<?= BASE_URL . '/' . ltrim($img['file_path'], '/') ?>')">
-            <img src="<?= BASE_URL . '/' . ltrim($img['file_path'], '/') ?>" alt="Photo <?= $i+1 ?>">
+          <div class="gallery-thumb <?= $i === 0 ? 'active' : '' ?>" onclick="switchImage(this,'<?= get_asset_url($img['file_path']) ?>')">
+            <img src="<?= get_asset_url($img['file_path']) ?>" alt="Photo <?= $i+1 ?>">
           </div>
           <?php endforeach; ?>
         </div>

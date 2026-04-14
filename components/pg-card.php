@@ -21,9 +21,7 @@ if ($is_student) {
 }
 
 // Cover image
-$cover = !empty($pg['cover_image'])
-    ? BASE_URL . '/' . ltrim($pg['cover_image'], '/')
-    : BASE_URL . '/assets/images/pg-placeholder.jpg';
+$cover = get_asset_url($pg['cover_image'] ?? null, 'assets/images/pg-placeholder.jpg');
 
 // Amenity pills (show up to 4)
 $amenities_icons = [
