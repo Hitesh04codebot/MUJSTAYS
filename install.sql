@@ -292,13 +292,13 @@ INSERT INTO `areas` (`id`, `name`, `distance_from_muj`) VALUES
 (5, 'Agra Road', 4.80);
 
 -- 2. Users (Admin, Owners, Students)
--- Passwords: admin123, owner123, student123 (hashed)
-INSERT INTO `users` (`id`, `name`, `email`, `password_hash`, `phone`, `role`, `gender`, `is_verified`, `is_kyc_verified`, `is_active`) VALUES
-(1, 'Admin MUJSTAYS', 'admin@mujstays.com', '$2y$12$K8REiQGkK8F.3JO1n7S6hOmxAkXCPc8qhvEL0gY9pMj3wRYN4dLgy', '+919876543210', 'admin', NULL, 1, 0, 1),
-(2, 'Ramesh Sharma', 'owner@mujstays.com', '$2y$10$8.7.Z1D1Z1D1Z1D1Z1D1Z1u', '+919812345678', 'owner', 'male', 1, 1, 1),
-(3, 'Sunita Verma', 'sunita@mujstays.com', '$2y$10$8.7.Z1D1Z1D1Z1D1Z1D1Z1u', '+919898765432', 'owner', 'female', 1, 1, 1),
-(4, 'Arjun Singh', 'student@mujstays.com', '$2y$10$8.7.Z1D1Z1D1Z1D1Z1D1Z1u', '+919900112233', 'student', 'male', 1, 0, 1),
-(5, 'Priya Gupta', 'priya@mujstays.com', '$2y$10$8.7.Z1D1Z1D1Z1D1Z1D1Z1u', '+919911223344', 'student', 'female', 1, 0, 1);
+-- Passwords for ALL: password
+INSERT INTO `users` (`id`, `name`, `email`, `password_hash`, `phone`, `role`, `gender`, `is_verified`, `is_kyc_verified`, `is_active`, `is_deleted`) VALUES
+(1, 'Admin MUJSTAYS', 'admin@mujstays.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '+919876543210', 'admin', NULL, 1, 0, 1, 0),
+(2, 'Ramesh Sharma', 'owner@mujstays.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '+919812345678', 'owner', 'male', 1, 1, 1, 0),
+(3, 'Sunita Verma', 'sunita@mujstays.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '+919898765432', 'owner', 'female', 1, 1, 1, 0),
+(4, 'Arjun Singh', 'student@mujstays.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '+919900112233', 'student', 'male', 1, 0, 1, 0),
+(5, 'Priya Gupta', 'priya@mujstays.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '+919911223344', 'student', 'female', 1, 0, 1, 0);
 
 -- 3. Listings
 INSERT INTO `pg_listings` (`id`, `owner_id`, `area_id`, `area_name`, `title`, `slug`, `description`, `address`, `distance_from_muj`, `price_min`, `price_max`, `gender_preference`, `has_food`, `has_wifi`, `has_ac`, `has_parking`, `has_laundry`, `has_cctv`, `has_warden`, `status`, `is_featured`, `avg_rating`, `total_reviews`) VALUES
