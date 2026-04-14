@@ -20,6 +20,8 @@ if (!function_exists('get_db')) {
             ];
             try {
                 $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
+                // Disable ONLY_FULL_GROUP_BY for compatibility with MySQL 8.0
+                $pdo->exec("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
             } catch (PDOException $e) {
                 // For PBL evaluation debugging, we show the full error
                 die('<div style="background:#fee;padding:20px;font-family:monospace;border-left:4px solid red">
