@@ -7,6 +7,7 @@ require_once __DIR__ . '/../includes/helpers.php';
 $is_logged = !empty($_SESSION['user_id']);
 $role      = $_SESSION['role'] ?? '';
 $user_name = $_SESSION['name'] ?? '';
+$user_photo = $_SESSION['profile_photo'] ?? '';
 $user_id   = (int)($_SESSION['user_id'] ?? 0);
 
 $unread_count = 0;
@@ -64,9 +65,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
           <!-- Profile Dropdown -->
           <div style="position:relative">
             <button id="profile-btn" class="btn btn-ghost" style="display:flex;align-items:center;gap:8px;padding:8px 12px">
-              <div style="width:32px;height:32px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0">
-                <?= strtoupper(mb_substr($user_name, 0, 1)) ?>
-              </div>
+              <?php if ($user_photo): ?>
+                <img src="<?= get_asset_url($user_photo) ?>" alt="Profile" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0">
+              <?php else: ?>
+                <div style="width:32px;height:32px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0">
+                  <?= strtoupper(mb_substr($user_name, 0, 1)) ?>
+                </div>
+              <?php endif; ?>
               <span style="font-size:14px;font-weight:600;color:var(--primary)"><?= htmlspecialchars(explode(' ', $user_name)[0]) ?></span>
               <i class="fas fa-chevron-down" style="font-size:11px;color:var(--text-muted)"></i>
             </button>
@@ -85,6 +90,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
               $profile = match($role) {
                 'student' => BASE_URL . '/user/profile.php',
                 'owner'   => BASE_URL . '/owner/profile.php',
+                'admin'   => BASE_URL . '/admin/profile.php',
                 default   => '',
               };
               ?>

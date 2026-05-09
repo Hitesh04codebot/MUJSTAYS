@@ -45,7 +45,7 @@ $reviews_stmt = $pdo->query("
     FROM reviews r
     JOIN users u ON u.id = r.student_id
     JOIN pg_listings p ON p.id = r.pg_id
-    WHERE r.is_approved = 1 AND r.review_text IS NOT NULL
+    WHERE r.is_approved = 1 AND r.is_pinned = 1 AND r.review_text IS NOT NULL
     ORDER BY r.is_pinned DESC, r.rating DESC, r.created_at DESC LIMIT 9
 ");
 $testimonials = $reviews_stmt->fetchAll();
@@ -287,8 +287,12 @@ $areas_icons = [
         <p class="testimonial-text" style="font-size:1.05rem; line-height:1.6; font-style:italic; flex-grow:1; margin-bottom:24px;">"<?= htmlspecialchars($t['review_text']) ?>"</p>
         
         <div class="testimonial-author" style="margin-top:auto; padding-top:16px; border-top:1px solid rgba(0,0,0,0.05);">
-          <div style="width:48px;height:48px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px;flex-shrink:0">
-            <?= strtoupper(mb_substr($t['student_name'], 0, 1)) ?>
+          <div style="width:48px;height:48px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px;flex-shrink:0;overflow:hidden">
+            <?php if (!empty($t['profile_photo'])): ?>
+              <img src="<?= get_asset_url($t['profile_photo']) ?>" style="width:100%;height:100%;object-fit:cover">
+            <?php else: ?>
+              <?= strtoupper(mb_substr($t['student_name'], 0, 1)) ?>
+            <?php endif; ?>
           </div>
           <div style="min-width:0">
             <div class="testimonial-name" style="font-weight:700; color:var(--primary);"><?= htmlspecialchars($t['student_name']) ?></div>

@@ -10,7 +10,7 @@ require_auth('student');
 $uid = current_user_id();
 
 // Handle cancel
-if ($_SERVER['REQUEST_METHOD']==='POST' && !empty($_POST['cancel_booking'])) {
+if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['cancel_booking'])) {
     if (!verify_csrf()) { flash_set('error','Invalid request.'); }
     else {
         $bid = (int)$_POST['booking_id'];

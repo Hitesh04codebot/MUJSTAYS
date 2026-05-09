@@ -56,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['email']     = $user['email'];
                 $_SESSION['is_verified'] = $user['is_verified'];
                 $_SESSION['is_active']   = $user['is_active'];
+                $_SESSION['profile_photo'] = $user['profile_photo'];
 
                 // Remember Me
                 if (!empty($_POST['remember_me'])) {

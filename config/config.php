@@ -36,7 +36,7 @@ define('ADMIN_EMAIL', 'admin@mujstays.com');
 // --- File Upload Limits ---
 define('MAX_FILE_SIZE_MB', 10);
 define('MAX_VIDEO_SIZE_MB', 50);
-define('ALLOWED_IMAGE_TYPES', ['image/jpeg', 'image/png', 'image/webp']);
+define('ALLOWED_IMAGE_TYPES', ['image/jpeg', 'image/png', 'image/webp', 'application/pdf']);
 define('ALLOWED_VIDEO_TYPES', ['video/mp4', 'video/webm']);
 
 // --- Platform Settings ---

@@ -8,8 +8,8 @@ ServerSignature Off
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # Block access to KYC uploads
-  RewriteRule ^uploads/kyc/ - [F,L]
+  # Allow KYC viewing for admin (Security: Use a proxy script in production)
+  # RewriteRule ^uploads/kyc/ - [F,L]
 
   # Block access to config and includes
   RewriteRule ^config/ - [F,L]

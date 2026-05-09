@@ -26,11 +26,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!$name) {
             $error = 'Name is required.';
         } else {
-            $pdo->prepare("UPDATE users SET name = ?, phone = ?, updated_at = NOW() WHERE id = ?")
-                ->execute([$name, $phone, $uid]);
-            $_SESSION['name'] = $name;
-            $success = 'Profile updated successfully!';
-            // Refresh user data
+            $photo_path = $user['profile_photo'];
+            if (!empty($_FILES['profile_photo']['name'])) {
+                try {
+                    $path = upload_file($_FILES['profile_photo'], 'avatars/' . $uid, true);
+                    if ($path) $photo_path = $path;
+                } catch (Exception $e) {
+                    $error = $e->getMessage();
+                }
+            }
+            if (!$error) {
+                $pdo->prepare("UPDATE users SET name = ?, phone = ?, profile_photo = ?, updated_at = NOW() WHERE id = ?")
+                    ->execute([$name, $phone, $photo_path, $uid]);
+                $_SESSION['name'] = $name;
+                $_SESSION['profile_photo'] = $photo_path;
+                $success = 'Profile updated successfully!';
+                // Refresh user data
+                $stmt->execute([$uid]);
+                $user = $stmt->fetch();
+            }
+        }
+    } elseif (isset($_POST['remove_photo'])) {
+        if (!empty($user['profile_photo'])) {
+            try { delete_upload($user['profile_photo']); } catch (Exception $e) {}
+            $pdo->prepare("UPDATE users SET profile_photo = NULL, updated_at = NOW() WHERE id = ?")->execute([$uid]);
+            $_SESSION['profile_photo'] = '';
+            $success = 'Profile photo removed successfully!';
             $stmt->execute([$uid]);
             $user = $stmt->fetch();
         }
@@ -49,7 +70,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hash = password_hash($new, PASSWORD_BCRYPT, ['cost' => 12]);
             $pdo->prepare("UPDATE users SET password_hash = ?, updated_at = NOW() WHERE id = ?")
                 ->execute([$hash, $uid]);
-            $success = 'Password changed successfully!';
+            
+            // Force user to login with new password
+            session_unset();
+            session_destroy();
+            session_start();
+            $_SESSION['flash_success'] = 'Password changed successfully! Please log in with your new password.';
+            header('Location: ' . BASE_URL . '/login.php');
+            exit;
         }
     }
 }
@@ -78,8 +106,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="card">
                     <div class="card-header"><h3>Personal Information</h3></div>
                     <div class="card-body">
-                        <form method="POST">
+                        <form method="POST" enctype="multipart/form-data">
                             <?= csrf_field() ?>
+                            <div class="form-group">
+                                <label class="form-label">Profile Photo (Optional)</label>
+                                <?php if (!empty($user['profile_photo'])): ?>
+                                    <div style="display:flex; align-items:center; gap:16px; margin-bottom:12px">
+                                        <img src="<?= get_asset_url($user['profile_photo']) ?>" style="width:60px; height:60px; border-radius:50%; object-fit:cover">
+                                        <button type="submit" name="remove_photo" value="1" class="btn btn-outline btn-sm" style="color:var(--danger); border-color:var(--danger)" formnovalidate>Remove Photo</button>
+                                    </div>
+                                <?php endif; ?>
+                                <input type="file" name="profile_photo" class="form-control" accept="image/*">
+                            </div>
                             <div class="form-group">
                                 <label class="form-label">Full Name</label>
                                 <input type="text" name="name" class="form-control" value="<?= htmlspecialchars($user['name']) ?>" required>
@@ -93,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label class="form-label">Phone Number</label>
                                 <input type="text" name="phone" class="form-control" value="<?= htmlspecialchars($user['phone'] ?? '') ?>" placeholder="+91 98765 43210">
                             </div>
-                            <button type="submit" name="update_profile" class="btn btn-primary">Update Profile</button>
+                            <button type="submit" name="update_profile" value="1" class="btn btn-primary">Update Profile</button>
                         </form>
                     </div>
                 </div>
@@ -117,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label class="form-label">Confirm New Password</label>
                                 <input type="password" name="confirm_password" class="form-control" required>
                             </div>
-                            <button type="submit" name="change_password" class="btn btn-outline">Change Password</button>
+                            <button type="submit" name="change_password" value="1" class="btn btn-outline">Change Password</button>
                         </form>
                     </div>
                 </div>

@@ -109,8 +109,12 @@ $last_msg_id = !empty($messages) ? end($messages)['id'] : 0;
          data-user-id="<?= $conv['partner_id'] ?>"
          data-user-name="<?= htmlspecialchars($conv['partner_name']) ?>"
          data-pg-id="<?= $conv['pg_id'] ?>">
-        <div class="chat-avatar" style="background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-size:14px;font-weight:700">
-          <?= strtoupper(mb_substr($conv['partner_name'], 0, 1)) ?>
+        <div class="chat-avatar" style="background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-size:14px;font-weight:700;overflow:hidden">
+          <?php if (!empty($conv['profile_photo'])): ?>
+            <img src="<?= get_asset_url($conv['profile_photo']) ?>" style="width:100%;height:100%;object-fit:cover">
+          <?php else: ?>
+            <?= strtoupper(mb_substr($conv['partner_name'], 0, 1)) ?>
+          <?php endif; ?>
         </div>
         <div style="flex:1;min-width:0">
           <div style="display:flex;justify-content:space-between;align-items:baseline">
@@ -136,8 +140,12 @@ $last_msg_id = !empty($messages) ? end($messages)['id'] : 0;
   <div class="chat-window">
     <?php if ($active_partner_id && $active_conv): ?>
     <div class="chat-header">
-      <div class="chat-avatar" style="background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-size:14px;font-weight:700;width:40px;height:40px">
-        <?= strtoupper(mb_substr($active_conv['partner_name'], 0, 1)) ?>
+      <div class="chat-avatar" style="background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-size:14px;font-weight:700;width:40px;height:40px;overflow:hidden">
+        <?php if (!empty($active_conv['profile_photo'])): ?>
+          <img src="<?= get_asset_url($active_conv['profile_photo']) ?>" style="width:100%;height:100%;object-fit:cover">
+        <?php else: ?>
+          <?= strtoupper(mb_substr($active_conv['partner_name'], 0, 1)) ?>
+        <?php endif; ?>
       </div>
       <div>
         <div class="chat-header-name" style="font-weight:700;color:var(--primary)"><?= htmlspecialchars($active_conv['partner_name']) ?></div>

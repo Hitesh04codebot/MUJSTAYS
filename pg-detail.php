@@ -242,8 +242,13 @@ $available_beds_all= array_sum(array_column($room_types, 'available_beds'));
         <div class="card" style="margin-bottom:24px">
           <div class="card-body">
             <h3 style="margin-bottom:16px"><i class="fas fa-map-marked-alt" style="color:var(--accent)"></i> Location Map</h3>
+            <?php 
+              $map_query = (!empty($pg['latitude']) && !empty($pg['longitude'])) 
+                ? $pg['latitude'] . ',' . $pg['longitude'] 
+                : urlencode($pg['address']); 
+            ?>
             <iframe class="map-embed"
-              src="https://maps.google.com/maps?q=<?= urlencode($pg['address']) ?>&output=embed&z=15"
+              src="https://maps.google.com/maps?q=<?= $map_query ?>&output=embed&z=15"
               loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade">
             </iframe>
             <div style="margin-top:12px;font-size:13px;color:var(--text-muted)">
@@ -291,8 +296,12 @@ $available_beds_all= array_sum(array_column($room_types, 'available_beds'));
                 <div style="padding:20px;background:var(--bg);border-radius:10px;border:1px solid var(--border)">
                   <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
                     <div style="display:flex;align-items:center;gap:10px">
-                      <div style="width:40px;height:40px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px">
-                        <?= strtoupper(mb_substr($rev['student_name'],0,1)) ?>
+                      <div style="width:40px;height:40px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;overflow:hidden;flex-shrink:0">
+                        <?php if (!empty($rev['student_photo'])): ?>
+                          <img src="<?= get_asset_url($rev['student_photo']) ?>" style="width:100%;height:100%;object-fit:cover">
+                        <?php else: ?>
+                          <?= strtoupper(mb_substr($rev['student_name'],0,1)) ?>
+                        <?php endif; ?>
                       </div>
                       <div>
                         <div style="font-weight:700;font-size:14px"><?= htmlspecialchars(explode(' ',$rev['student_name'])[0] . ' ' . (isset(explode(' ',$rev['student_name'])[1]) ? mb_substr(explode(' ',$rev['student_name'])[1],0,1).'.' : '')) ?></div>

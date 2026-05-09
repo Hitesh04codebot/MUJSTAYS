@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     } else {
                         try {
                             require_once 'includes/upload_handler.php';
-                            $kyc_path = upload_file($_FILES['kyc_file'], 'kyc/' . $user_id, false);
+                            $kyc_path = upload_file($_FILES['kyc_file'], 'kyc/' . $user_id, true);
                             $pdo->prepare("INSERT INTO kyc_documents (owner_id, doc_type, file_path, status) VALUES (?, ?, ?, 'pending')")
                                 ->execute([$user_id, $kyc_type, $kyc_path]);
                         } catch (Exception $e) {

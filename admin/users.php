@@ -43,9 +43,9 @@ $pag=paginate($total,20);
 $users=$pdo->prepare("SELECT u.*, 
     (SELECT COUNT(*) FROM pg_listings WHERE owner_id=u.id AND status='approved') AS active_listings, 
     (SELECT COUNT(*) FROM bookings WHERE student_id=u.id) AS total_bookings,
-    k.file_path AS kyc_path, k.id_type AS kyc_type
+    k.file_path AS kyc_path, k.doc_type AS kyc_type, k.status AS kyc_status
     FROM users u 
-    LEFT JOIN kyc_documents k ON k.user_id=u.id AND k.status='pending'
+    LEFT JOIN kyc_documents k ON k.id = (SELECT id FROM kyc_documents WHERE owner_id=u.id ORDER BY created_at DESC LIMIT 1)
     WHERE $where 
     ORDER BY u.created_at DESC LIMIT {$pag['per_page']} OFFSET {$pag['offset']}");
 
@@ -104,7 +104,10 @@ $users->execute($params); $users=$users->fetchAll();
             <td>
               <?php if ($u['role']==='owner'): ?>
                 <?php if ($u['is_kyc_verified']): ?><span class="badge badge-success">✓ Verified</span>
-                <?php else: ?>
+                <?php elseif ($u['kyc_status'] === 'rejected'): ?>
+                  <span class="badge badge-danger">Rejected</span>
+                  <div style="margin-top:4px"><a href="<?= BASE_URL . '/' . $u['kyc_path'] ?>" target="_blank" class="btn btn-ghost btn-sm" style="padding:2px 5px;font-size:10px;color:var(--accent)"><i class="fas fa-file-alt"></i> View ID</a></div>
+                <?php elseif ($u['kyc_status'] === 'pending'): ?>
                   <span class="badge badge-warning">Pending</span>
                   <?php if (!empty($u['kyc_path'])): ?>
                     <div style="margin-top:4px"><a href="<?= BASE_URL . '/' . $u['kyc_path'] ?>" target="_blank" class="btn btn-ghost btn-sm" style="padding:2px 5px;font-size:10px;color:var(--accent)"><i class="fas fa-file-alt"></i> View ID Proof</a></div>
@@ -114,6 +117,8 @@ $users->execute($params); $users=$users->fetchAll();
                     <button name="action" value="verify_kyc" class="btn btn-success btn-sm" style="padding:3px 8px;font-size:11px" onclick="return confirm('Verify KYC for this owner?')">Verify</button>
                     <button name="action" value="reject_kyc" class="btn btn-danger btn-sm" style="padding:3px 8px;font-size:11px">Reject</button>
                   </form>
+                <?php else: ?>
+                  <span class="badge badge-ghost">No Upload</span>
                 <?php endif; ?>
               <?php else: ?>—<?php endif; ?>
             </td>

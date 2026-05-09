@@ -7,7 +7,7 @@ require_once __DIR__ . '/../config/config.php';
  * Handle a single file upload.
  * Returns relative path on success, throws Exception on failure.
  */
-function handle_upload(array $file, string $subdirectory, bool $is_image = true): string {
+function upload_file(array $file, string $subdirectory, bool $is_image = true): string {
     if ($file['error'] !== UPLOAD_ERR_OK) {
         $errors = [
             UPLOAD_ERR_INI_SIZE   => 'File too large (server limit).',
@@ -43,6 +43,7 @@ function handle_upload(array $file, string $subdirectory, bool $is_image = true)
         'image/webp' => 'webp',
         'video/mp4'  => 'mp4',
         'video/webm' => 'webm',
+        'application/pdf' => 'pdf',
     ];
     $ext = $ext_map[$mime] ?? 'bin';
 
@@ -96,8 +97,8 @@ function handle_upload(array $file, string $subdirectory, bool $is_image = true)
     }
     $dest_path = $dest_dir . $filename;
 
-    // --- Compress image if GD available ---
-    if ($is_image && extension_loaded('gd')) {
+    // --- Compress image if GD available (Skip for PDF) ---
+    if ($is_image && $mime !== 'application/pdf' && extension_loaded('gd')) {
         compress_image($file['tmp_name'], $dest_path, $mime);
     } else {
         if (!move_uploaded_file($file['tmp_name'], $dest_path)) {
@@ -184,7 +185,7 @@ function handle_multiple_uploads(array $files, string $subdirectory, bool $is_im
             'error'    => $files['error'][$i],
             'size'     => $files['size'][$i],
         ];
-        $paths[] = handle_upload($single, $subdirectory, $is_image);
+        $paths[] = upload_file($single, $subdirectory, $is_image);
     }
     return $paths;
 }

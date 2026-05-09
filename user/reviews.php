@@ -34,14 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_review'])) {
             if ($check2->fetch()) {
                 $error = 'You have already reviewed this stay.';
             } else {
-                $pdo->prepare("INSERT INTO reviews (pg_id, student_id, booking_id, rating, review_text) VALUES (?, ?, ?, ?, ?)")
+                $pdo->prepare("INSERT INTO reviews (pg_id, student_id, booking_id, rating, review_text, is_approved) VALUES (?, ?, ?, ?, ?, 0)")
                     ->execute([$pg_id, $uid, $booking_id, $rating, $comment]);
                 
                 // Update PG average rating
-                $pdo->prepare("UPDATE pg_listings SET avg_rating = (SELECT AVG(rating) FROM reviews WHERE pg_id = ?), total_reviews = (SELECT COUNT(*) FROM reviews WHERE pg_id = ?) WHERE id = ?")
+                $pdo->prepare("UPDATE pg_listings SET avg_rating = (SELECT AVG(rating) FROM reviews WHERE pg_id = ? AND is_approved = 1), total_reviews = (SELECT COUNT(*) FROM reviews WHERE pg_id = ? AND is_approved = 1) WHERE id = ?")
                     ->execute([$pg_id, $pg_id, $pg_id]);
                 
-                $success = 'Review posted successfully!';
+                $success = 'Review posted successfully! It will be visible after admin approval.';
             }
         }
     }

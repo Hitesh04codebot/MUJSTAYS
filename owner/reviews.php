@@ -87,6 +87,9 @@ $reviews = $stmt->fetchAll();
                             <div>
                                 <div class="fw-700"><?= htmlspecialchars($r['student_name']) ?></div>
                                 <div class="small text-muted">Reviewed <span class="fw-600"><?= htmlspecialchars($r['pg_title']) ?></span></div>
+                                <?php if(!$r['is_approved']): ?>
+                                    <div class="badge badge-warning mt-4" style="font-size:10px; display:inline-block">Pending Admin Approval</div>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="text-right">

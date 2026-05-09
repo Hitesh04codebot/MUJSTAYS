@@ -9,7 +9,8 @@ $fixes = [
     "ALTER TABLE reviews ADD COLUMN is_pinned TINYINT(1) DEFAULT 0 AFTER is_approved",
     "ALTER TABLE pg_listings ADD COLUMN area_name VARCHAR(100) DEFAULT NULL",
     "ALTER TABLE kyc_documents CHANGE COLUMN user_id owner_id INT UNSIGNED NOT NULL",
-    "ALTER TABLE kyc_documents CHANGE COLUMN id_type doc_type VARCHAR(50) NOT NULL"
+    "ALTER TABLE kyc_documents CHANGE COLUMN id_type doc_type VARCHAR(50) NOT NULL",
+    "ALTER TABLE kyc_documents CHANGE COLUMN submitted_at created_at DATETIME DEFAULT CURRENT_TIMESTAMP"
 ];
 
 foreach ($fixes as $sql) {

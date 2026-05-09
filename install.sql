@@ -229,11 +229,11 @@ CREATE TABLE `saved_pgs` (
 CREATE TABLE `kyc_documents` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `owner_id` INT UNSIGNED NOT NULL,
-  `document_type` VARCHAR(50) NOT NULL,
+  `doc_type` ENUM('aadhar', 'pan', 'passport', 'voter_id') NOT NULL,
   `file_path` VARCHAR(300) NOT NULL,
   `status` ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
   `rejection_reason` TEXT DEFAULT NULL,
-  `submitted_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_kyc_owner` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
